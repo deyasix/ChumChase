@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ChumChase</string>
+    <string name="app_tagline">Connect, Chat, Cherish</string>
+    <string name="login_label">Login</string>
+    <string name="password_label">Password</string>
+    <string name="login_button">Login</string>
+</resources>
