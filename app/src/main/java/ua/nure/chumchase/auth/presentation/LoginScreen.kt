@@ -8,6 +8,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import org.koin.java.KoinJavaComponent.get
@@ -16,7 +17,10 @@ import ua.nure.chumchase.components.LabeledTextField
 import ua.nure.chumchase.ui.theme.ChumChaseTheme
 
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = get(LoginViewModel::class.java)) {
+fun LoginScreen(
+    loginViewModel: LoginViewModel = get(LoginViewModel::class.java),
+    onNavigateToRegister: () -> Unit
+) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -29,7 +33,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = get(LoginViewModel::class.java)
             LoginForm(
                 Modifier
                     .weight(3f)
-                    .padding(16.dp), loginViewModel
+                    .padding(16.dp), loginViewModel, onNavigateToRegister
             )
         }
     }
@@ -39,7 +43,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = get(LoginViewModel::class.java)
 @Preview
 fun LoginScreenPreview() {
     ChumChaseTheme {
-        LoginScreen()
+        LoginScreen(onNavigateToRegister = {})
     }
 }
 
@@ -67,7 +71,11 @@ fun LoginHeader(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LoginForm(modifier: Modifier = Modifier, viewModel: LoginViewModel) {
+fun LoginForm(
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel,
+    onNavigateToRegister: () -> Unit
+) {
     Column(
         modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -81,10 +89,21 @@ fun LoginForm(modifier: Modifier = Modifier, viewModel: LoginViewModel) {
         LabeledTextField(
             onChangeText = { viewModel.setPassword(it) },
             label = stringResource(R.string.password_label),
-            initialText = viewModel.password.value
+            initialText = viewModel.password.value,
+            isPassword = true
         )
-        Button(onClick = {}) {
+        Button(onClick = { viewModel.login() }) {
             Text(stringResource(R.string.login_button), style = MaterialTheme.typography.bodyLarge)
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("Don't have an account?", style = MaterialTheme.typography.bodyMedium)
+            TextButton(onClick = onNavigateToRegister) {
+                Text(
+                    "Register",
+                    textDecoration = TextDecoration.Underline,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
         }
     }
 }
