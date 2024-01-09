@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ua.nure.chumchase.auth.domain.EmailFieldErrors
+import ua.nure.chumchase.auth.domain.ErrorMessage
+import ua.nure.chumchase.auth.domain.PasswordFieldErrors
 import ua.nure.chumchase.auth.domain.RegisterUseCase
 import ua.nure.chumchase.base.BaseViewModel
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import ua.nure.chumchase.auth.domain.LoginUseCase
 import ua.nure.chumchase.base.BaseViewModel
 
@@ -25,11 +26,17 @@ class LoginViewModel(private val loginUseCase: LoginUseCase) :
         _password.value = text
     }
 
+    fun isLoginAvailable(): Boolean {
+        return (login.value ?: "").isNotEmpty() && (password.value ?: "").isNotEmpty()
+    }
+
     fun login() {
         startLoading()
         viewModelScope.launch {
             val result = loginUseCase.execute(login.value, password.value)
             handleResult(result)
+            if (result.isSuccess) Timber.d("Success")
+            else Timber.d("Failure")
         }
     }
 }

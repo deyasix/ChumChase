@@ -1,4 +1,4 @@
-package ua.nure.chumchase.auth.presentation
+package ua.nure.chumchase.auth.domain
 
 import android.util.Patterns
 import ua.nure.chumchase.R
@@ -10,6 +10,15 @@ interface ErrorMessage {
 enum class BaseFieldErrors : ErrorMessage {
     EMPTY {
         override val message = R.string.field_should_be_not_empty
+    }
+}
+
+enum class OperationStatusMessage: ErrorMessage {
+    FAILURE {
+        override val message = R.string.failed_operation
+    },
+    SUCCESS {
+        override val message = R.string.success_operation
     }
 }
 

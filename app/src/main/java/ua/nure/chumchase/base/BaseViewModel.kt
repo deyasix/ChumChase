@@ -12,13 +12,13 @@ abstract class BaseViewModel : ViewModel() {
     val isSuccess: LiveData<Boolean>
         get() = _isSuccess
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?>
+    private val _error = MutableLiveData<Int?>()
+    val error: LiveData<Int?>
         get() = _error
 
     protected fun handleResult(result: BaseResult<out Any>) {
         _isSuccess.postValue(result.isSuccess)
-        _error.postValue(result.error)
+        _error.postValue(result.error?.message)
         _isLoading.postValue(false)
     }
 

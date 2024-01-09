@@ -3,7 +3,8 @@ package ua.nure.chumchase.auth.presentation
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.*
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
@@ -15,24 +16,38 @@ import ua.nure.chumchase.components.LabeledTextField
 
 @Composable
 fun LoginScreen(
-    onNavigateToRegister: () -> Unit
+    onNavigateToRegister: () -> Unit,
+    viewModel: LoginViewModel = koinViewModel()
 ) {
-    Surface(
-        modifier = Modifier.fillMaxSize()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val isSuccess by viewModel.isSuccess.observeAsState()
+    if (isSuccess == true) {
+        LaunchedEffect(snackbarHostState) {
+            snackbarHostState.showSnackbar("Success!")
+        }
+    }
+    Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
-        val configuration = LocalConfiguration.current
-        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Row {
-                Header(Modifier.weight(1f))
-                LoginForm(Modifier.weight(1f), onNavigateToRegister)
+        Surface(Modifier.fillMaxSize()) {
+            val configuration = LocalConfiguration.current
+            val isLoading by viewModel.isLoading.observeAsState()
+            if (isLoading == true) {
+                Box(Modifier.padding(it)) {
+                    LinearProgressIndicator(Modifier.align(Alignment.Center))
+                }
             }
-        } else {
-            Column {
-                Header(Modifier.weight(1f))
-                LoginForm(Modifier.weight(3f), onNavigateToRegister)
+            if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                Row(Modifier.padding(it)) {
+                    Header(Modifier.weight(1f))
+                    LoginForm(Modifier.weight(1f), onNavigateToRegister)
+                }
+            } else {
+                Column(Modifier.padding(it)) {
+                    Header(Modifier.weight(1f))
+                    LoginForm(Modifier.weight(3f), onNavigateToRegister)
+                }
             }
         }
-
     }
 }
 
@@ -42,6 +57,8 @@ fun LoginForm(
     onNavigateToRegister: () -> Unit,
     viewModel: LoginViewModel = koinViewModel()
 ) {
+    val login by viewModel.login.observeAsState()
+    val password by viewModel.password.observeAsState()
     Column(
         modifier
             .padding(16.dp)
@@ -50,18 +67,23 @@ fun LoginForm(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         LabeledTextField(
-            onChangeText = { viewModel.setLogin(it) },
+            onChangeText = viewModel::setLogin,
             label = stringResource(R.string.login_label),
             initialText = viewModel.login.value
         )
         LabeledTextField(
-            onChangeText = { viewModel.setPassword(it) },
+            onChangeText = viewModel::setPassword,
             label = stringResource(R.string.password_label),
             initialText = viewModel.password.value,
             isPassword = true
         )
-        Button(onClick = { viewModel.login() }) {
-            Text(stringResource(R.string.login_button), style = MaterialTheme.typography.bodyLarge)
+        key(login, password) {
+            Button(onClick = { viewModel.login() }, enabled = viewModel.isLoginAvailable()) {
+                Text(
+                    stringResource(R.string.login_button),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(

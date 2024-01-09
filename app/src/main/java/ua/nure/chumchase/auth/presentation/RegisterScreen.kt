@@ -59,12 +59,12 @@ fun RegisterForm(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         LabeledTextField(
-            onChangeText = { viewModel.setLogin(it) },
+            onChangeText = viewModel::setLogin,
             label = stringResource(R.string.login_label),
             initialText = viewModel.login.value
         )
         LabeledTextField(
-            onChangeText = { viewModel.setEmail(it) },
+            onChangeText = viewModel::setEmail,
             label = stringResource(R.string.email_label),
             initialText = viewModel.email.value,
             isEmail = true,
@@ -72,7 +72,7 @@ fun RegisterForm(
         )
         key(repeatedPassword) {
             LabeledTextField(
-                onChangeText = { viewModel.setPassword(it) },
+                onChangeText = viewModel::setPassword,
                 label = stringResource(R.string.password_label),
                 initialText = viewModel.password.value,
                 isPassword = true,
@@ -81,14 +81,14 @@ fun RegisterForm(
         }
         key(password) {
             LabeledTextField(
-                onChangeText = { viewModel.setRepeatedPassword(it) },
+                onChangeText = viewModel::setRepeatedPassword,
                 label = stringResource(R.string.repeat_password_label),
                 initialText = viewModel.repeatedPassword.value,
                 isPassword = true,
                 isValidInput = { viewModel.verifyRepeatedPassword() }
             )
         }
-        Button(onClick = { viewModel.register() }, enabled = viewModel.isRegistrationAvailable()) {
+        Button(onClick = viewModel::register, enabled = viewModel.isRegistrationAvailable()) {
             Text(
                 stringResource(R.string.register_button),
                 style = MaterialTheme.typography.bodyLarge

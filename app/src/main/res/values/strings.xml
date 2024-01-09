@@ -15,4 +15,6 @@
     <string name="password_too_short">Password is too short, minimum length is 6 symbols</string>
     <string name="password_dont_match">Passwords don\'t match</string>
     <string name="invalid_email_error">Email is invalid</string>
+    <string name="failed_operation">Failure! Something went wrong…</string>
+    <string name="success_operation">Success!</string>
 </resources>

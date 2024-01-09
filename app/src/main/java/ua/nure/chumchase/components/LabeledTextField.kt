@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import ua.nure.chumchase.auth.presentation.BaseFieldErrors
+import ua.nure.chumchase.auth.domain.BaseFieldErrors
 import ua.nure.chumchase.auth.presentation.ValidState
 
 @Composable
