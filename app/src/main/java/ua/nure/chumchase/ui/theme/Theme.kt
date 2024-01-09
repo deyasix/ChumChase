@@ -24,7 +24,8 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = LightBeige,
     background = LightBeige,
     surface = LightBeige,
-    onPrimaryContainer = Peach
+    tertiary = Peach,
+    error = ErrorRed
 )
 
 @Composable

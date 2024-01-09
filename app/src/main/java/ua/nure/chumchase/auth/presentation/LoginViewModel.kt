@@ -7,7 +7,8 @@ import kotlinx.coroutines.launch
 import ua.nure.chumchase.auth.domain.LoginUseCase
 import ua.nure.chumchase.base.BaseViewModel
 
-class LoginViewModel(private val loginUseCase: LoginUseCase) : BaseViewModel() {
+class LoginViewModel(private val loginUseCase: LoginUseCase) :
+    BaseViewModel() {
     private val _login = MutableLiveData<String>()
     val login: LiveData<String>
         get() = _login

@@ -1,83 +1,51 @@
 package ua.nure.chumchase.auth.presentation
 
-import androidx.compose.foundation.background
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.*
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.*
-import org.koin.java.KoinJavaComponent.get
+import androidx.compose.ui.unit.dp
+import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.components.LabeledTextField
-import ua.nure.chumchase.ui.theme.ChumChaseTheme
 
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel = get(LoginViewModel::class.java),
     onNavigateToRegister: () -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
-        Column {
-            LoginHeader(
-                Modifier
-                    .background(color = MaterialTheme.colorScheme.primary)
-                    .weight(1f)
-            )
-            LoginForm(
-                Modifier
-                    .weight(3f)
-                    .padding(16.dp), loginViewModel, onNavigateToRegister
-            )
+        val configuration = LocalConfiguration.current
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Row {
+                Header(Modifier.weight(1f))
+                LoginForm(Modifier.weight(1f), onNavigateToRegister)
+            }
+        } else {
+            Column {
+                Header(Modifier.weight(1f))
+                LoginForm(Modifier.weight(3f), onNavigateToRegister)
+            }
         }
-    }
-}
 
-@Composable
-@Preview
-fun LoginScreenPreview() {
-    ChumChaseTheme {
-        LoginScreen(onNavigateToRegister = {})
-    }
-}
-
-@Composable
-fun LoginHeader(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.align(Alignment.Center)) {
-            Text(
-                style = TextStyle(
-                    fontFamily = FontFamily(Font(R.font.spicy_rice, FontWeight.Normal)),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 48.sp
-                ), text = stringResource(R.string.app_name), modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .heightIn(max = 52.dp), color = MaterialTheme.colorScheme.onPrimary
-            )
-            Text(
-                style = MaterialTheme.typography.titleMedium,
-                text = stringResource(R.string.app_tagline),
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                color = MaterialTheme.colorScheme.onPrimary
-            )
-        }
     }
 }
 
 @Composable
 fun LoginForm(
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel,
-    onNavigateToRegister: () -> Unit
+    onNavigateToRegister: () -> Unit,
+    viewModel: LoginViewModel = koinViewModel()
 ) {
     Column(
-        modifier.fillMaxWidth(),
+        modifier
+            .padding(16.dp)
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -96,12 +64,15 @@ fun LoginForm(
             Text(stringResource(R.string.login_button), style = MaterialTheme.typography.bodyLarge)
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Don't have an account?", style = MaterialTheme.typography.bodyMedium)
+            Text(
+                stringResource(R.string.dont_have_an_account),
+                style = MaterialTheme.typography.bodyLarge
+            )
             TextButton(onClick = onNavigateToRegister) {
                 Text(
-                    "Register",
+                    stringResource(R.string.register),
                     textDecoration = TextDecoration.Underline,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }

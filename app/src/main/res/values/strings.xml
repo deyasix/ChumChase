@@ -4,4 +4,15 @@
     <string name="login_label">Login</string>
     <string name="password_label">Password</string>
     <string name="login_button">Login</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email_label">Email</string>
+    <string name="register_button">Register</string>
+    <string name="repeat_password_label">Repeat password</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="field_should_be_not_empty">Field should be not empty</string>
+    <string name="password_too_short">Password is too short, minimum length is 6 symbols</string>
+    <string name="password_dont_match">Passwords don\'t match</string>
+    <string name="invalid_email_error">Email is invalid</string>
 </resources>

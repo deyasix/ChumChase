@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -61,9 +62,16 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
     implementation("androidx.navigation:navigation-compose:$2.7.6")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
 
     // koin
-    implementation("io.insert-koin:koin-android:3.5.0")
+    val koin = "3.5.3"
+    implementation("io.insert-koin:koin-android:$koin")
+    implementation("io.insert-koin:koin-core:$koin")
+    implementation("io.insert-koin:koin-androidx-compose:$koin")
+
+    // timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
 
     // test
     testImplementation("junit:junit:4.13.2")
