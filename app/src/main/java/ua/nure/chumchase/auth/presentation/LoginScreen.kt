@@ -7,9 +7,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.*
 import androidx.compose.ui.platform.*
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.auth.domain.OperationStatusMessage
@@ -59,12 +59,13 @@ fun LoginForm(
     val login by viewModel.login.observeAsState()
     val password by viewModel.password.observeAsState()
     val isLoading by viewModel.isLoading.observeAsState()
+    val padding = dimensionResource(R.dimen.login_register_form_padding)
     Column(
         modifier
-            .padding(16.dp)
+            .padding(padding)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(padding)
     ) {
         LabeledTextField(
             onChangeText = viewModel::setLogin,
@@ -78,7 +79,7 @@ fun LoginForm(
             isPassword = true
         )
         key(login, password) {
-            Button(onClick = { viewModel.login() }, enabled = viewModel.isLoginAvailable()) {
+            Button(onClick = viewModel::login, enabled = viewModel.isLoginAvailable()) {
                 Text(
                     stringResource(R.string.login_button),
                     style = MaterialTheme.typography.bodyLarge

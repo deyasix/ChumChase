@@ -7,11 +7,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.*
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.*
+import androidx.compose.ui.res.*
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.auth.domain.OperationStatusMessage
@@ -71,13 +69,14 @@ fun RegisterForm(
     val repeatedPassword by viewModel.repeatedPassword.observeAsState()
     val password by viewModel.password.observeAsState()
     val isLoading by viewModel.isLoading.observeAsState()
+    val padding = dimensionResource(R.dimen.login_register_form_padding)
     Column(
         modifier
-            .padding(16.dp)
+            .padding(padding)
             .fillMaxWidth()
             .verticalScroll(state = scrollState, enabled = true),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(padding)
     ) {
         LabeledTextField(
             onChangeText = viewModel::setLogin,

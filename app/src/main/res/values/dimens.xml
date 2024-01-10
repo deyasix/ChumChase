@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Login and Registration screens -->
+    <dimen name="login_register_form_padding">16dp</dimen>
+
+</resources>
