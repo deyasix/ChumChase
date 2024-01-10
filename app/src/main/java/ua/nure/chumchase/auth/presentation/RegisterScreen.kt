@@ -34,7 +34,6 @@ fun RegisterScreen(
                 snackbarHostState.showSnackbar(context.getString(message))
             }
         }
-
         Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
         ) { padding ->
             Surface(Modifier.fillMaxSize()) {
@@ -115,9 +114,7 @@ fun RegisterForm(
             )
         }
         if (isLoading == true) {
-            Box {
-                LinearProgressIndicator(Modifier.align(Alignment.Center))
-            }
+            LinearProgressIndicator()
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(

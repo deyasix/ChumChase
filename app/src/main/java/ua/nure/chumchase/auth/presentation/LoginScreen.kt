@@ -87,9 +87,7 @@ fun LoginForm(
             }
         }
         if (isLoading == true) {
-            Box {
-                LinearProgressIndicator(Modifier.align(Alignment.Center))
-            }
+            LinearProgressIndicator()
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
