@@ -8,34 +8,54 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.*
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
+import ua.nure.chumchase.auth.domain.OperationStatusMessage
 import ua.nure.chumchase.components.LabeledTextField
 
 @Composable
 fun RegisterScreen(
-    onNavigateToLogin: () -> Unit
+    onNavigateToLogin: () -> Unit,
+    viewModel: RegisterViewModel = koinViewModel()
 ) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
-        val configuration = LocalConfiguration.current
-        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Row {
-                Header(Modifier.weight(1f))
-                RegisterForm(
-                    Modifier
-                        .weight(1f)
-                        .align(Alignment.CenterVertically), onNavigateToLogin
-                )
+        val snackbarHostState = remember { SnackbarHostState() }
+        val isSuccess by viewModel.isSuccess.observeAsState()
+        if (isSuccess == true || isSuccess == false) {
+            val context = LocalContext.current
+            val message = if (isSuccess == true) OperationStatusMessage.SUCCESS.message else {
+                viewModel.error.value
+            } ?: OperationStatusMessage.FAILURE.message
+            LaunchedEffect(snackbarHostState) {
+                snackbarHostState.showSnackbar(context.getString(message))
             }
-        } else {
-            Column {
-                Header(Modifier.weight(1f))
-                RegisterForm(Modifier.weight(3f), onNavigateToLogin)
+        }
+
+        Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        ) { padding ->
+            Surface(Modifier.fillMaxSize()) {
+                val configuration = LocalConfiguration.current
+                if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    Row(Modifier.padding(padding)) {
+                        Header(Modifier.weight(1f))
+                        RegisterForm(
+                            Modifier
+                                .weight(1f)
+                                .align(Alignment.CenterVertically), onNavigateToLogin
+                        )
+                    }
+                } else {
+                    Column(Modifier.padding(padding)) {
+                        Header(Modifier.weight(1f))
+                        RegisterForm(Modifier.weight(3f), onNavigateToLogin)
+                    }
+                }
             }
         }
     }
@@ -50,6 +70,7 @@ fun RegisterForm(
     val scrollState = rememberScrollState()
     val repeatedPassword by viewModel.repeatedPassword.observeAsState()
     val password by viewModel.password.observeAsState()
+    val isLoading by viewModel.isLoading.observeAsState()
     Column(
         modifier
             .padding(16.dp)
@@ -93,6 +114,11 @@ fun RegisterForm(
                 stringResource(R.string.register_button),
                 style = MaterialTheme.typography.bodyLarge
             )
+        }
+        if (isLoading == true) {
+            Box {
+                LinearProgressIndicator(Modifier.align(Alignment.Center))
+            }
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(

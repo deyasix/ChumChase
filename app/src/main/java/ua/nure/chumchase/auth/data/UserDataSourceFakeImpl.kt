@@ -3,12 +3,14 @@ package ua.nure.chumchase.auth.data
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ua.nure.chumchase.auth.domain.OperationStatusMessage
 import ua.nure.chumchase.auth.domain.UserDataSource
 import ua.nure.chumchase.auth.domain.model.User
@@ -33,8 +35,9 @@ class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : Us
     }
 
     override suspend fun register(user: User): BaseResult<Boolean> {
-        delay(2000)
-        val result = users.toMutableList().add(user)
+        delay(1000)
+        val result = users.toMutableList()
+        result.add(user)
         dataStore.edit {
             it[USER_LIST] = gsonConverter.toJson(result)
         }
@@ -42,15 +45,17 @@ class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : Us
     }
 
     private suspend fun getUsers(): List<User> {
-        val jsonResult = dataStore.data.map { it[USER_LIST] ?: "" }.first()
-        return if (jsonResult.isNotEmpty()) gsonConverter.fromJson<List<User>>(
-            jsonResult,
-            User::class.java
-        )
-        else listOf()
+        return withContext(Dispatchers.IO) {
+            val jsonResult = dataStore.data.map { it[USER_LIST] ?: "" }.first()
+            return@withContext if (jsonResult.isNotEmpty()) gsonConverter.fromJson(jsonResult)
+            else listOf()
+        }
     }
 
     companion object {
         private val USER_LIST = stringPreferencesKey("USER_LIST")
     }
 }
+
+internal inline fun <reified T> Gson.fromJson(json: String) =
+    fromJson<T>(json, object : TypeToken<T>() {}.type)
