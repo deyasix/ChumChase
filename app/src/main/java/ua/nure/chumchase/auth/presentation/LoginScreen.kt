@@ -9,11 +9,12 @@ import androidx.compose.ui.*
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextDecoration
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
-import ua.nure.chumchase.core.components.Header
-import ua.nure.chumchase.core.components.LabeledTextField
+import ua.nure.chumchase.auth.components.NavigationQuestion
+import ua.nure.chumchase.auth.components.ResultResponder
+import ua.nure.chumchase.auth.components.Header
+import ua.nure.chumchase.auth.components.LabeledTextField
 
 @Composable
 fun LoginScreen(
@@ -21,9 +22,9 @@ fun LoginScreen(
     onNavigateToMain: () -> Unit,
     viewModel: LoginViewModel = koinViewModel()
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-    ResultResponder(viewModel, onNavigateToMain, snackbarHostState)
-    Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    val snackBarHostState = remember { SnackbarHostState() }
+    ResultResponder(viewModel, onNavigateToMain, snackBarHostState)
+    Scaffold(snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
     ) {
         Surface(Modifier.fillMaxSize()) {
             val configuration = LocalConfiguration.current
@@ -85,18 +86,10 @@ fun LoginForm(
         if (isLoading == true) {
             LinearProgressIndicator()
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                stringResource(R.string.dont_have_an_account),
-                style = MaterialTheme.typography.bodyLarge
-            )
-            TextButton(onClick = onNavigateToRegister) {
-                Text(
-                    stringResource(R.string.register),
-                    textDecoration = TextDecoration.Underline,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-        }
+        NavigationQuestion(
+            questionText = R.string.dont_have_an_account,
+            buttonText = R.string.register,
+            onNavigate = onNavigateToRegister
+        )
     }
 }

@@ -2,18 +2,22 @@ package ua.nure.chumchase.auth.presentation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.*
-import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
-import ua.nure.chumchase.core.components.Header
-import ua.nure.chumchase.core.components.LabeledTextField
+import ua.nure.chumchase.auth.components.NavigationQuestion
+import ua.nure.chumchase.auth.components.ResultResponder
+import ua.nure.chumchase.auth.components.Header
+import ua.nure.chumchase.auth.components.LabeledTextField
 
 @Composable
 fun RegisterScreen(
@@ -24,9 +28,9 @@ fun RegisterScreen(
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
-        val snackbarHostState = remember { SnackbarHostState() }
-        ResultResponder(viewModel, onNavigateToMain, snackbarHostState)
-        Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        val snackBarHostState = remember { SnackbarHostState() }
+        ResultResponder(viewModel, onNavigateToMain, snackBarHostState)
+        Scaffold(snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
         ) { padding ->
             Surface(Modifier.fillMaxSize()) {
                 val configuration = LocalConfiguration.current
@@ -109,18 +113,10 @@ fun RegisterForm(
         if (isLoading == true) {
             LinearProgressIndicator()
         }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                stringResource(R.string.already_have_an_account),
-                style = MaterialTheme.typography.bodyLarge
-            )
-            TextButton(onClick = onNavigateToLogin) {
-                Text(
-                    stringResource(R.string.login),
-                    textDecoration = TextDecoration.Underline,
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-        }
+        NavigationQuestion(
+            questionText = R.string.already_have_an_account,
+            buttonText = R.string.login,
+            onNavigate = onNavigateToLogin
+        )
     }
 }

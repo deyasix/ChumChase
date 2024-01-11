@@ -1,4 +1,4 @@
-package ua.nure.chumchase.core.components
+package ua.nure.chumchase.auth.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions

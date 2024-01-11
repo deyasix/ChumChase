@@ -1,4 +1,4 @@
-package ua.nure.chumchase.core.components
+package ua.nure.chumchase.auth.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,8 +11,8 @@ import androidx.compose.ui.text.font.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import ua.nure.chumchase.R
-import ua.nure.chumchase.core.theme.ChumChaseTheme
-import ua.nure.chumchase.core.theme.LogoFamily
+import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
+import ua.nure.chumchase.core.ui.theme.LogoFamily
 
 @Composable
 fun Header(modifier: Modifier = Modifier) {

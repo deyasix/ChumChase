@@ -1,4 +1,4 @@
-package ua.nure.chumchase.core.theme
+package ua.nure.chumchase.core.ui.theme
 
 import androidx.compose.foundation.shape.*
 import androidx.compose.material3.Shapes

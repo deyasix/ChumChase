@@ -1,4 +1,4 @@
-package ua.nure.chumchase.core.theme
+package ua.nure.chumchase.core.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.*
 import ua.nure.chumchase.core.BottomNavItem
-import ua.nure.chumchase.core.theme.ChumChaseTheme
+import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
