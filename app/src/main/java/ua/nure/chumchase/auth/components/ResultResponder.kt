@@ -16,7 +16,7 @@ fun ResultResponder(
     val isSuccess by viewModel.isSuccess.observeAsState()
     if (isSuccess == true || isSuccess == false) {
         val context = LocalContext.current
-        LaunchedEffect(snackBarHostState) {
+        LaunchedEffect(isSuccess, snackBarHostState) {
             val message = viewModel.error.value ?: OperationStatusMessage.FAILURE.message
             if (isSuccess == true) onSuccess()
             else snackBarHostState.showSnackbar(context.getString(message))
