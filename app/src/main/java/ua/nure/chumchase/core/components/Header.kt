@@ -1,23 +1,31 @@
-package ua.nure.chumchase.auth.presentation
+package ua.nure.chumchase.core.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.*
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.*
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import ua.nure.chumchase.R
+import ua.nure.chumchase.core.theme.ChumChaseTheme
+import ua.nure.chumchase.core.theme.LogoFamily
 
 @Composable
 fun Header(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)) {
+    Box(
+        modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(dimensionResource(R.dimen.header_padding))
+    ) {
         Column(modifier = Modifier.align(Alignment.Center)) {
             Text(
                 style = TextStyle(
-                    fontFamily = FontFamily(Font(R.font.spicy_rice, FontWeight.Normal)),
+                    fontFamily = LogoFamily,
                     fontWeight = FontWeight.Normal,
                     fontSize = 48.sp
                 ), text = stringResource(R.string.app_name), modifier = Modifier
@@ -31,5 +39,13 @@ fun Header(modifier: Modifier = Modifier) {
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }
+    }
+}
+
+@Composable
+@Preview
+private fun HeaderPreview() {
+    ChumChaseTheme {
+        Header()
     }
 }

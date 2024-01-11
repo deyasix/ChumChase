@@ -2,20 +2,22 @@ package ua.nure.chumchase.core.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.*
 import androidx.compose.ui.unit.sp
 import ua.nure.chumchase.R
 
-val BitterFontFamily = FontFamily(
-    Font(R.font.bitter_regular, FontWeight.Normal),
-    Font(R.font.bitter_medium, FontWeight.Medium)
+val ManropeFontFamily = FontFamily(
+    Font(R.font.manrope_regular, FontWeight.Normal),
+    Font(R.font.manrope_medium, FontWeight.Medium)
+)
+
+val LogoFamily = FontFamily(
+    Font(R.font.spicy_rice, FontWeight.Normal)
 )
 
 val Typography = Typography(
     bodyMedium = TextStyle(
-        fontFamily = BitterFontFamily,
+        fontFamily = ManropeFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -29,14 +31,14 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     ),
     bodyLarge = TextStyle(
-        fontFamily = BitterFontFamily,
+        fontFamily = ManropeFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
     bodySmall = TextStyle(
-        fontFamily = BitterFontFamily,
+        fontFamily = ManropeFontFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 12.sp,
         lineHeight = 16.sp,

@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.auth.domain.OperationStatusMessage
+import ua.nure.chumchase.core.components.Header
 import ua.nure.chumchase.core.components.LabeledTextField
 
 @Composable
@@ -37,7 +38,7 @@ fun LoginScreen(
             val configuration = LocalConfiguration.current
             if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 Row(Modifier.padding(it)) {
-                    Header(Modifier.weight(1f))
+                    Header(Modifier.weight(1f).fillMaxHeight())
                     LoginForm(Modifier.weight(1f), onNavigateToRegister)
                 }
             } else {

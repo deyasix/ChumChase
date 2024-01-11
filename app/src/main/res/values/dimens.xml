@@ -4,4 +4,7 @@
     <!-- Login and Registration screens -->
     <dimen name="login_register_form_padding">16dp</dimen>
 
+    <!-- Components -->
+    <dimen name="header_padding">16dp</dimen>
+
 </resources>

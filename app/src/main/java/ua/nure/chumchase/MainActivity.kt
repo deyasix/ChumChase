@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppScreen() {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = "login") {
+    NavHost(navController, startDestination = Screen.Login.route) {
         composable(Screen.Login.route) {
             LoginScreen(onNavigateToRegister = { navController.navigate(Screen.Registration.route) })
         }
