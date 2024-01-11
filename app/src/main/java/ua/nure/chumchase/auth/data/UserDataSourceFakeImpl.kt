@@ -36,6 +36,7 @@ class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : Us
         dataStore.edit {
             it[USER_LIST] = gsonConverter.toJson(result)
         }
+        users = getUsers()
         return login(user.login, user.password)
     }
 
