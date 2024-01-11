@@ -7,34 +7,25 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.*
-import androidx.compose.ui.platform.*
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.*
 import androidx.compose.ui.text.style.TextDecoration
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
-import ua.nure.chumchase.auth.domain.OperationStatusMessage
 import ua.nure.chumchase.core.components.Header
 import ua.nure.chumchase.core.components.LabeledTextField
 
 @Composable
 fun RegisterScreen(
     onNavigateToLogin: () -> Unit,
+    onNavigateToMain: () -> Unit,
     viewModel: RegisterViewModel = koinViewModel()
 ) {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
         val snackbarHostState = remember { SnackbarHostState() }
-        val isSuccess by viewModel.isSuccess.observeAsState()
-        if (isSuccess == true || isSuccess == false) {
-            val context = LocalContext.current
-            val message = if (isSuccess == true) OperationStatusMessage.SUCCESS.message else {
-                viewModel.error.value
-            } ?: OperationStatusMessage.FAILURE.message
-            LaunchedEffect(snackbarHostState) {
-                snackbarHostState.showSnackbar(context.getString(message))
-            }
-        }
+        ResultResponder(viewModel, onNavigateToMain, snackbarHostState)
         Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
         ) { padding ->
             Surface(Modifier.fillMaxSize()) {
@@ -58,6 +49,7 @@ fun RegisterScreen(
         }
     }
 }
+
 
 @Composable
 fun RegisterForm(

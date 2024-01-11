@@ -21,4 +21,11 @@
     <!-- Navigation -->
     <string name="login_nav">to_login</string>
     <string name="registration_nav">to_registration</string>
+    <string name="main_nav">to_main</string>
+
+    <!-- Bottom Menu -->
+    <string name="profile_button">Profile</string>
+    <string name="friends_button">Friends</string>
+    <string name="recommendations_button">For You</string>
+    <string name="chat_button">Chat</string>
 </resources>

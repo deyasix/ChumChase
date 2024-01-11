@@ -6,39 +6,34 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.*
-import androidx.compose.ui.platform.*
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
-import ua.nure.chumchase.auth.domain.OperationStatusMessage
 import ua.nure.chumchase.core.components.Header
 import ua.nure.chumchase.core.components.LabeledTextField
 
 @Composable
 fun LoginScreen(
     onNavigateToRegister: () -> Unit,
+    onNavigateToMain: () -> Unit,
     viewModel: LoginViewModel = koinViewModel()
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val isSuccess by viewModel.isSuccess.observeAsState()
-    if (isSuccess == true || isSuccess == false) {
-        val context = LocalContext.current
-        LaunchedEffect(snackbarHostState) {
-            val message = if (isSuccess == true) OperationStatusMessage.SUCCESS.message else {
-                viewModel.error.value
-            } ?: OperationStatusMessage.FAILURE.message
-            snackbarHostState.showSnackbar(context.getString(message))
-        }
-    }
+    ResultResponder(viewModel, onNavigateToMain, snackbarHostState)
     Scaffold(snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
         Surface(Modifier.fillMaxSize()) {
             val configuration = LocalConfiguration.current
             if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 Row(Modifier.padding(it)) {
-                    Header(Modifier.weight(1f).fillMaxHeight())
+                    Header(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                    )
                     LoginForm(Modifier.weight(1f), onNavigateToRegister)
                 }
             } else {
