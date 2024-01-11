@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.auth.domain.OperationStatusMessage
-import ua.nure.chumchase.components.LabeledTextField
+import ua.nure.chumchase.core.components.LabeledTextField
 
 @Composable
 fun RegisterScreen(

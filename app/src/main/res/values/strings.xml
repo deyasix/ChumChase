@@ -17,4 +17,8 @@
     <string name="invalid_email_error">Email is invalid</string>
     <string name="failed_operation">Failure! Something went wrong…</string>
     <string name="success_operation">Success!</string>
+
+    <!-- Navigation -->
+    <string name="login_nav">to_login</string>
+    <string name="registration_nav">to_registration</string>
 </resources>

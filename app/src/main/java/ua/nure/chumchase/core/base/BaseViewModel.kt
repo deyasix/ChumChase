@@ -1,4 +1,4 @@
-package ua.nure.chumchase.base
+package ua.nure.chumchase.core.base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

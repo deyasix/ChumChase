@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import ua.nure.chumchase.auth.domain.LoginUseCase
-import ua.nure.chumchase.base.BaseViewModel
+import ua.nure.chumchase.core.base.BaseViewModel
 
 class LoginViewModel(private val loginUseCase: LoginUseCase) :
     BaseViewModel() {

@@ -1,7 +1,7 @@
 package ua.nure.chumchase.auth.domain
 
 import ua.nure.chumchase.auth.domain.model.User
-import ua.nure.chumchase.base.BaseResult
+import ua.nure.chumchase.core.base.BaseResult
 
 interface UserDataSource {
 

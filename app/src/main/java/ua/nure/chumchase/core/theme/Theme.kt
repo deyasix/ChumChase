@@ -1,4 +1,4 @@
-package ua.nure.chumchase.ui.theme
+package ua.nure.chumchase.core.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme

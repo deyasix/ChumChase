@@ -9,7 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ua.nure.chumchase.auth.presentation.LoginScreen
 import ua.nure.chumchase.auth.presentation.RegisterScreen
-import ua.nure.chumchase.ui.theme.ChumChaseTheme
+import ua.nure.chumchase.core.Screen
+import ua.nure.chumchase.core.theme.ChumChaseTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +27,15 @@ class MainActivity : ComponentActivity() {
 fun AppScreen() {
     val navController = rememberNavController()
     NavHost(navController, startDestination = "login") {
-        composable("login") {
-            LoginScreen(onNavigateToRegister = { navController.navigate("register") })
+        composable(Screen.Login.route) {
+            LoginScreen(onNavigateToRegister = { navController.navigate(Screen.Registration.route) })
         }
-        composable("register") { RegisterScreen(onNavigateToLogin = { navController.navigate("login") }) }
+        composable(Screen.Registration.route) {
+            RegisterScreen(onNavigateToLogin = {
+                navController.navigate(
+                    Screen.Login.route
+                )
+            })
+        }
     }
 }

@@ -1,4 +1,4 @@
-package ua.nure.chumchase.ui.theme
+package ua.nure.chumchase.core.theme
 
 import androidx.compose.ui.graphics.Color
 

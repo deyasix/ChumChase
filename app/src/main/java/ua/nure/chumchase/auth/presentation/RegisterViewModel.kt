@@ -8,7 +8,7 @@ import ua.nure.chumchase.auth.domain.EmailFieldErrors
 import ua.nure.chumchase.auth.domain.ErrorMessage
 import ua.nure.chumchase.auth.domain.PasswordFieldErrors
 import ua.nure.chumchase.auth.domain.RegisterUseCase
-import ua.nure.chumchase.base.BaseViewModel
+import ua.nure.chumchase.core.base.BaseViewModel
 
 class RegisterViewModel(private val registerUseCase: RegisterUseCase) : BaseViewModel() {
     private val _login = MutableLiveData<String>()
