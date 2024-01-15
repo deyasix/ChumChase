@@ -28,4 +28,11 @@
     <string name="friends_button">Friends</string>
     <string name="recommendations_button">For You</string>
     <string name="chat_button">Chat</string>
+
+    <!-- Profile -->
+    <string name="profile_photo_description">Profile photo</string>
+    <string name="settings_button_description">Settings</string>
+    <string name="send_comment_description">Send a comment</string>
+    <string name="comment_field_placeholder">Post a new comment here…</string>
+
 </resources>

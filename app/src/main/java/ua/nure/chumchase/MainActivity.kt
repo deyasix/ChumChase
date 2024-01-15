@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ua.nure.chumchase.core.BottomNavItem
 import ua.nure.chumchase.auth.presentation.AuthScreen
+import ua.nure.chumchase.core.profile.presentation.ProfileScreen
 import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,7 +46,7 @@ fun AppScreen() {
                 Text(stringResource(BottomNavItem.Friends.labelId))
             }
             composable(BottomNavItem.Profile.route) {
-                Text(stringResource(BottomNavItem.Profile.labelId))
+                ProfileScreen()
             }
         }
     }

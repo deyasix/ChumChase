@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "ua.nure.chumchase"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -53,7 +53,7 @@ android {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     // compose
     val composePlatform = platform("androidx.compose:compose-bom:2023.10.01")
@@ -91,6 +91,9 @@ dependencies {
     val retrofit = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit")
+
+    // landscapist (glide, coil, fresco)
+    implementation("com.github.skydoves:landscapist-glide:2.2.13")
 
     // test
     testImplementation("junit:junit:4.13.2")

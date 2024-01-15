@@ -23,46 +23,44 @@ fun LabeledTextField(
     isPassword: Boolean = false,
     isEmail: Boolean = false
 ) {
-    Column(modifier) {
-        var text by rememberSaveable { mutableStateOf(initialText ?: "") }
+    var text by rememberSaveable { mutableStateOf(initialText ?: "") }
 
-        var validState by remember {
-            mutableStateOf(
-                if (initialText != null) isValidInput(initialText)
-                else ValidState(true)
-            )
-        }
-
-        TextField(
-            value = text,
-            onValueChange = {
-                text = it
-                onChangeText(it)
-                validState = isValidInput(it)
-            },
-            textStyle = MaterialTheme.typography.bodyMedium,
-            visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-            label = {
-                label?.let {
-                    Text(
-                        text = label,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-            },
-            singleLine = true,
-            isError = !validState.isValid,
-            keyboardOptions = KeyboardOptions(
-                autoCorrect = true,
-                keyboardType = if (isEmail) KeyboardType.Email else if (isPassword) KeyboardType.Password else KeyboardType.Text
-            ),
-            supportingText = {
-                validState.validMessage?.let {
-                    Text(stringResource(it.message), style = MaterialTheme.typography.bodySmall)
-                }
-            }
+    var validState by remember {
+        mutableStateOf(
+            if (initialText != null) isValidInput(initialText)
+            else ValidState(true)
         )
     }
+
+    TextField(
+        modifier = modifier,
+        value = text,
+        onValueChange = {
+            text = it
+            onChangeText(it)
+            validState = isValidInput(it)
+        },
+        textStyle = MaterialTheme.typography.bodyMedium,
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+        label = {
+            label?.let {
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        },
+        singleLine = true,
+        isError = !validState.isValid,
+        keyboardOptions = KeyboardOptions(
+            autoCorrect = true,
+            keyboardType = if (isEmail) KeyboardType.Email else if (isPassword) KeyboardType.Password else KeyboardType.Text
+        ),
+        supportingText = {
+            validState.validMessage?.let {
+                Text(stringResource(it.message), style = MaterialTheme.typography.bodySmall)
+            }
+        })
 }
 
 private fun checkForEmptiness(text: String): ValidState {

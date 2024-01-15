@@ -7,4 +7,7 @@
     <!-- Components -->
     <dimen name="header_padding">16dp</dimen>
 
+    <!-- Profile photo border -->
+    <dimen name="profile_photo_border">2dp</dimen>
+
 </resources>
