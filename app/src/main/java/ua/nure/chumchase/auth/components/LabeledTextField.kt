@@ -1,6 +1,5 @@
 package ua.nure.chumchase.auth.components
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*

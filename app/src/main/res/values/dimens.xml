@@ -7,7 +7,12 @@
     <!-- Components -->
     <dimen name="header_padding">16dp</dimen>
 
-    <!-- Profile photo border -->
+    <!-- Profile -->
     <dimen name="profile_photo_border">2dp</dimen>
+    <dimen name="profile_horizontal_padding">16dp</dimen>
+    <dimen name="profile_vertical_padding">8dp</dimen>
+    <dimen name="tag_horizontal_padding">2dp</dimen>
+    <dimen name="profile_photo_size">80dp</dimen>
+    <dimen name="comment_profile_photo_size">40dp</dimen>
 
 </resources>

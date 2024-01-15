@@ -12,9 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.core.components.LoadingScreen
@@ -22,13 +21,12 @@ import ua.nure.chumchase.core.profile.components.CommentField
 import ua.nure.chumchase.core.profile.components.Tag
 import ua.nure.chumchase.core.profile.components.Comment
 import ua.nure.chumchase.core.profile.components.ProfilePhoto
-import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
 
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = koinViewModel()
 ) {
-    val modifier = Modifier.padding(16.dp)
+    val modifier = Modifier.padding(dimensionResource(R.dimen.profile_horizontal_padding))
     Surface(color = MaterialTheme.colorScheme.surface) {
         val isLoading by viewModel.isLoading.observeAsState()
         if (isLoading == true) LoadingScreen()
@@ -51,7 +49,10 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .background(MaterialTheme.colorScheme.surface)
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp, horizontal = 16.dp),
+                                .padding(
+                                    vertical = dimensionResource(R.dimen.profile_vertical_padding),
+                                    horizontal = dimensionResource(R.dimen.profile_horizontal_padding)
+                                ),
                             comment = comment
                         )
                     }
@@ -75,9 +76,12 @@ fun ProfileInfo(modifier: Modifier = Modifier, viewModel: ProfileViewModel = koi
     val login by viewModel.login.observeAsState()
     val tags by viewModel.tags.observeAsState()
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        ProfilePhoto(photoUrl = photoUrl)
+        ProfilePhoto(
+            modifier = Modifier.size(dimensionResource(R.dimen.profile_photo_size)),
+            photoUrl = photoUrl
+        )
         Text(
-            modifier = Modifier.padding(vertical = 8.dp),
+            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.profile_vertical_padding)),
             text = login ?: "",
             style = MaterialTheme.typography.bodyLarge
         )
@@ -97,15 +101,11 @@ fun SettingsButton(modifier: Modifier = Modifier) {
 fun Tags(modifier: Modifier = Modifier, labels: List<String>) {
     FlowRow(modifier, horizontalArrangement = Arrangement.Center) {
         labels.forEach {
-            Tag(modifier.padding(horizontal = 2.dp), label = it)
+            Tag(
+                modifier.padding(horizontal = dimensionResource(R.dimen.tag_horizontal_padding)),
+                label = it,
+                onClick = {}
+            )
         }
-    }
-}
-
-@Composable
-@Preview
-fun ProfileScreenPreview() {
-    ChumChaseTheme {
-        ProfileScreen()
     }
 }

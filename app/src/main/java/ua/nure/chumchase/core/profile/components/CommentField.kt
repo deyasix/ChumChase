@@ -48,7 +48,7 @@ fun CommentField(
             )
         )
         IconButton(onClick = {
-            onSendComment();
+            onSendComment()
             currentComment = ""
             onChangeText(currentComment)
         }) {

@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun Tag(modifier: Modifier = Modifier, label: String) {
+fun Tag(modifier: Modifier = Modifier, label: String, onClick: (String) -> Unit) {
     SuggestionChip(
         modifier = modifier,
-        onClick = { },
+        onClick = { onClick(label) },
         label = { Text(label, style = MaterialTheme.typography.bodyLarge) })
 }
