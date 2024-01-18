@@ -1,5 +1,6 @@
 package ua.nure.chumchase.auth.domain
 
+import ua.nure.chumchase.auth.domain.model.LoginUserDTO
 import ua.nure.chumchase.core.base.BaseResult
 
 class LoginUseCase(private val userDataSource: UserDataSource) {
@@ -8,6 +9,6 @@ class LoginUseCase(private val userDataSource: UserDataSource) {
             isSuccess = false,
             error = BaseFieldErrors.EMPTY
         )
-        else userDataSource.login(login, password)
+        else userDataSource.login(LoginUserDTO(login, password))
     }
 }

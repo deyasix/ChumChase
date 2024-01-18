@@ -1,4 +1,4 @@
-package ua.nure.chumchase.auth.components
+package ua.nure.chumchase.auth.presentation.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row

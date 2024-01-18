@@ -1,4 +1,4 @@
-package ua.nure.chumchase.core.profile.components
+package ua.nure.chumchase.feature.profile.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -24,9 +24,8 @@ fun ProfilePhoto(modifier: Modifier = Modifier, photoUrl: String?) {
             MaterialTheme.colorScheme.primary,
             CircleShape
         )
-    val description = stringResource(R.string.profile_photo_description)
     val absentImage = rememberVectorPainter(Icons.Rounded.NoPhotography)
     if (photoUrl == null) {
-        Image(absentImage, description, photoModifier)
+        Image(absentImage, stringResource(R.string.profile_photo_description), photoModifier)
     } else GlideImage(imageModel = { photoUrl }, modifier = photoModifier)
 }

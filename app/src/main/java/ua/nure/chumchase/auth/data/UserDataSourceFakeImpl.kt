@@ -6,10 +6,14 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import timber.log.Timber
+import ua.nure.chumchase.auth.data.entity.User
 import ua.nure.chumchase.auth.domain.OperationStatusMessage
 import ua.nure.chumchase.auth.domain.UserDataSource
-import ua.nure.chumchase.auth.domain.model.User
+import ua.nure.chumchase.auth.domain.model.LoginUserDTO
+import ua.nure.chumchase.auth.domain.model.RegisterUserDTO
 import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.feature.profile.domain.model.UserInfoDTO
 
 class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : UserDataSource {
 
@@ -18,38 +22,97 @@ class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : Us
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            users = getUsers()
+            updateUsers()
         }
     }
 
-    override suspend fun login(login: String, password: String): BaseResult<Boolean> {
+    override suspend fun login(loginUserDTO: LoginUserDTO): BaseResult<Boolean> {
         delay(2000)
-        val result = users.find { it.login == login && it.password == password }
-        return if (result != null) BaseResult(isSuccess = true)
+        val result =
+            users.find { it.login == loginUserDTO.login && it.password == loginUserDTO.password }
+        return if (result != null) saveToken(result)
         else BaseResult(isSuccess = false, error = OperationStatusMessage.FAILURE)
     }
 
-    override suspend fun register(user: User): BaseResult<Boolean> {
+    override suspend fun register(registerUserDTO: RegisterUserDTO): BaseResult<Boolean> {
         delay(1000)
         val result = users.toMutableList()
-        result.add(user)
+        result.add(
+            User(
+                getNextId(),
+                registerUserDTO.login,
+                registerUserDTO.password,
+                registerUserDTO.email
+            )
+        )
         dataStore.edit {
             it[USER_LIST] = gsonConverter.toJson(result)
         }
-        users = getUsers()
-        return login(user.login, user.password)
+        updateUsers()
+        return login(LoginUserDTO(registerUserDTO.login, registerUserDTO.password))
     }
 
-    private suspend fun getUsers(): List<User> {
-        return withContext(Dispatchers.IO) {
+    private suspend fun updateUsers() {
+        users = withContext(Dispatchers.IO) {
             val jsonResult = dataStore.data.map { it[USER_LIST] ?: "" }.first()
             return@withContext if (jsonResult.isNotEmpty()) gsonConverter.fromJson(jsonResult)
             else listOf()
         }
     }
 
+    private suspend fun saveToken(user: User): BaseResult<Boolean> {
+        dataStore.edit {
+            it[LOGGED_USER_TOKEN] = gsonConverter.toJson(user, User::class.java)
+        }
+        return BaseResult(isSuccess = true)
+    }
+
+    private suspend fun getToken(): BaseResult<String> {
+        val token = dataStore.data.map { it[LOGGED_USER_TOKEN] ?: "" }.first()
+        return BaseResult(data = token, isSuccess = true)
+    }
+
+    override suspend fun getLoggedUser(): BaseResult<UserInfoDTO> {
+        val token = getToken().let { if (it.isSuccess) it.data else null }
+        return if (token == null) BaseResult(isSuccess = false)
+        else {
+            val user = gsonConverter.fromJson(token, User::class.java)
+            BaseResult(
+                isSuccess = true,
+                data = user.toDomainModel()
+            )
+        }
+    }
+
+    override suspend fun getUserById(id: Int): BaseResult<UserInfoDTO> {
+        val user = users.find { it.id == id }
+        return if (user != null) BaseResult(isSuccess = true, data = user.toDomainModel())
+        else BaseResult(isSuccess = false)
+    }
+
+    override suspend fun updateUserInfo(userInfoDTO: UserInfoDTO): BaseResult<Boolean> {
+        val token = getToken().let { if (it.isSuccess) it.data else null }
+        return if (token == null) BaseResult(isSuccess = false)
+        else {
+            val user = gsonConverter.fromJson(token, User::class.java)
+            users = users.map { if (it.id != user.id) it else user }
+            BaseResult(isSuccess = true)
+        }
+    }
+
+    override suspend fun getUsers(): BaseResult<List<UserInfoDTO>> {
+        val usersInfo = users.map { it.toDomainModel() }
+        return BaseResult(isSuccess = true, data = usersInfo)
+    }
+
+    private fun getNextId(): Int {
+        return users.maxOfOrNull { it.id }?.plus(1) ?: START_ID
+    }
+
     companion object {
         private val USER_LIST = stringPreferencesKey("USER_LIST")
+        private val LOGGED_USER_TOKEN = stringPreferencesKey("LOGGED_USER_TOKEN")
+        private const val START_ID = 1
     }
 }
 

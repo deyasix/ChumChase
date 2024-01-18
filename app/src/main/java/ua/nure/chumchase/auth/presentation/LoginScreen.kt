@@ -11,10 +11,10 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
-import ua.nure.chumchase.auth.components.NavigationQuestion
-import ua.nure.chumchase.auth.components.ResultResponder
-import ua.nure.chumchase.auth.components.Header
-import ua.nure.chumchase.auth.components.LabeledTextField
+import ua.nure.chumchase.auth.presentation.components.NavigationQuestion
+import ua.nure.chumchase.auth.presentation.components.ResultResponder
+import ua.nure.chumchase.auth.presentation.components.Header
+import ua.nure.chumchase.auth.presentation.components.LabeledTextField
 
 @Composable
 fun LoginScreen(

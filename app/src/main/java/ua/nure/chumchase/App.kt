@@ -6,7 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import ua.nure.chumchase.auth.authModule
-import ua.nure.chumchase.core.profile.profileModule
+import ua.nure.chumchase.feature.profile.profileModule
 
 class App : Application() {
     override fun onCreate() {

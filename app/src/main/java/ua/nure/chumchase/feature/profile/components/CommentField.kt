@@ -1,4 +1,4 @@
-package ua.nure.chumchase.core.profile.components
+package ua.nure.chumchase.feature.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

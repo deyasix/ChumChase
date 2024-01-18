@@ -1,4 +1,4 @@
-package ua.nure.chumchase
+package ua.nure.chumchase.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,10 +11,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ua.nure.chumchase.core.BottomNavItem
+import ua.nure.chumchase.BottomNavigationBar
 import ua.nure.chumchase.auth.presentation.AuthScreen
-import ua.nure.chumchase.core.profile.presentation.ProfileScreen
+import ua.nure.chumchase.core.BottomNavItems
+import ua.nure.chumchase.core.NavItems
+import ua.nure.chumchase.feature.profile.presentation.ProfileScreen
 import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
+import ua.nure.chumchase.feature.settings.presentation.SettingsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,20 +36,23 @@ fun AppScreen() {
     Scaffold(bottomBar = { BottomNavigationBar(navController) }) {
         NavHost(
             navController,
-            startDestination = BottomNavItem.Recommendations.route,
+            startDestination = BottomNavItems.RECOMMENDATIONS.route,
             modifier = Modifier.padding(it)
         ) {
-            composable(BottomNavItem.Recommendations.route) {
-                Text(stringResource(BottomNavItem.Recommendations.labelId))
+            composable(BottomNavItems.RECOMMENDATIONS.route) {
+                Text(stringResource(BottomNavItems.RECOMMENDATIONS.labelId))
             }
-            composable(BottomNavItem.Chat.route) {
-                Text(stringResource(BottomNavItem.Chat.labelId))
+            composable(BottomNavItems.CHAT.route) {
+                Text(stringResource(BottomNavItems.CHAT.labelId))
             }
-            composable(BottomNavItem.Friends.route) {
-                Text(stringResource(BottomNavItem.Friends.labelId))
+            composable(BottomNavItems.FRIENDS.route) {
+                Text(stringResource(BottomNavItems.FRIENDS.labelId))
             }
-            composable(BottomNavItem.Profile.route) {
-                ProfileScreen()
+            composable(BottomNavItems.PROFILE.route) {
+                ProfileScreen({ navController.navigate(NavItems.SETTINGS.route) })
+            }
+            composable(NavItems.SETTINGS.route) {
+                SettingsScreen()
             }
         }
     }

@@ -1,28 +1,28 @@
-package ua.nure.chumchase.core.profile.presentation
+package ua.nure.chumchase.feature.profile.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.core.base.BaseViewModel
-import ua.nure.chumchase.core.profile.domain.GetUserInfoUseCase
-import ua.nure.chumchase.core.profile.domain.model.Comment
+import ua.nure.chumchase.feature.profile.domain.UserInfoRepository
+import ua.nure.chumchase.feature.profile.domain.model.CommentDTO
 import java.time.LocalDateTime
 
-class ProfileViewModel(private val getUserInfoUseCase: GetUserInfoUseCase) : BaseViewModel() {
+class ProfileViewModel(private val userInfoRepository: UserInfoRepository) : BaseViewModel() {
     private val _login = MutableLiveData<String>()
     val login: LiveData<String>
         get() = _login
-    private val _photoUrl = MutableLiveData<String>()
-    val photoUrl: LiveData<String>
+    private val _photoUrl = MutableLiveData<String?>()
+    val photoUrl: LiveData<String?>
         get() = _photoUrl
 
     private val _tags = MutableLiveData<List<String>>()
     val tags: LiveData<List<String>>
         get() = _tags
 
-    private val _comments = MutableLiveData<List<Comment>>()
-    val comments: LiveData<List<Comment>>
+    private val _comments = MutableLiveData<List<CommentDTO>>()
+    val comments: LiveData<List<CommentDTO>>
         get() = _comments
     private val _currentComment = MutableLiveData<String>()
     val currentComment: LiveData<String>
@@ -39,7 +39,7 @@ class ProfileViewModel(private val getUserInfoUseCase: GetUserInfoUseCase) : Bas
     private fun getInfo() {
         startLoading()
         viewModelScope.launch {
-            val result = getUserInfoUseCase.execute()
+            val result = userInfoRepository.getLoggedUserInfo()
             result.data?.let {
                 _login.postValue(it.login)
                 _photoUrl.postValue(it.photoUrl)
@@ -52,10 +52,10 @@ class ProfileViewModel(private val getUserInfoUseCase: GetUserInfoUseCase) : Bas
 
     fun sendComment() {
         val dateTime = LocalDateTime.now().toString()
-        val comment =
-            Comment(_login.value ?: "", _currentComment.value ?: "", _photoUrl.value, dateTime)
+        val commentDTO =
+            CommentDTO(_login.value ?: "", _currentComment.value ?: "", _photoUrl.value, dateTime)
         _comments.value?.reversed()?.toMutableList()?.let {
-            it.add(comment)
+            it.add(commentDTO)
             _comments.value = it.reversed()
         }
     }

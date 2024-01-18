@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.*
-import ua.nure.chumchase.core.BottomNavItem
+import ua.nure.chumchase.core.BottomNavItems
 import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
 
 @Composable
@@ -16,7 +16,7 @@ fun BottomNavigationBar(navController: NavController) {
     BottomAppBar {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
-        BottomNavItem.values.forEach { item ->
+        BottomNavItems.values().forEach { item ->
             val isSelected = currentRoute == item.route
             val color = getColor(isSelected)
             BottomNavigationItem(

@@ -2,25 +2,25 @@ package ua.nure.chumchase.auth.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.*
-import ua.nure.chumchase.AppScreen
-import ua.nure.chumchase.auth.NavItem
+import ua.nure.chumchase.core.NavItems
+import ua.nure.chumchase.main.AppScreen
 
 @Composable
 fun AuthScreen() {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = NavItem.Login.route) {
-        composable(NavItem.Login.route) {
-            LoginScreen(onNavigateToRegister = { navController.navigate(NavItem.Registration.route) },
-                onNavigateToMain = { navController.navigate(NavItem.Main.route) })
+    NavHost(navController, startDestination = NavItems.LOGIN.route) {
+        composable(NavItems.LOGIN.route) {
+            LoginScreen(onNavigateToRegister = { navController.navigate(NavItems.REGISTRATION.route) },
+                onNavigateToMain = { navController.navigate(NavItems.MAIN.route) })
         }
-        composable(NavItem.Registration.route) {
+        composable(NavItems.REGISTRATION.route) {
             RegisterScreen(onNavigateToLogin = {
                 navController.navigate(
-                    NavItem.Login.route
+                    NavItems.LOGIN.route
                 )
-            }, onNavigateToMain = { navController.navigate(NavItem.Main.route) })
+            }, onNavigateToMain = { navController.navigate(NavItems.MAIN.route) })
         }
-        composable(NavItem.Main.route) {
+        composable(NavItems.MAIN.route) {
             AppScreen()
         }
     }

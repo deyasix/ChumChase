@@ -22,6 +22,7 @@
     <string name="login_nav">to_login</string>
     <string name="registration_nav">to_registration</string>
     <string name="main_nav">to_main</string>
+    <string name="settings_nav">to_settings</string>
 
     <!-- Bottom Menu -->
     <string name="profile_button">Profile</string>
@@ -34,5 +35,10 @@
     <string name="settings_button_description">Settings</string>
     <string name="send_comment_description">Send a comment</string>
     <string name="comment_field_placeholder">Post a new comment here…</string>
+
+    <!-- Settings -->
+    <string name="settings_login_title">Login</string>
+    <string name="settings_email_title">Email</string>
+    <string name="settings_interests_title">Interests</string>
 
 </resources>

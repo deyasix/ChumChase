@@ -1,4 +1,4 @@
-package ua.nure.chumchase.auth.components
+package ua.nure.chumchase.auth.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

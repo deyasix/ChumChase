@@ -1,4 +1,4 @@
-package ua.nure.chumchase.core.profile.presentation
+package ua.nure.chumchase.feature.profile.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,13 +17,14 @@ import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.core.components.LoadingScreen
-import ua.nure.chumchase.core.profile.components.CommentField
-import ua.nure.chumchase.core.profile.components.Tag
-import ua.nure.chumchase.core.profile.components.Comment
-import ua.nure.chumchase.core.profile.components.ProfilePhoto
+import ua.nure.chumchase.feature.profile.components.CommentField
+import ua.nure.chumchase.feature.profile.components.Tag
+import ua.nure.chumchase.feature.profile.components.Comment
+import ua.nure.chumchase.feature.profile.components.ProfilePhoto
 
 @Composable
 fun ProfileScreen(
+    onNavigateToSettings: () -> Unit,
     viewModel: ProfileViewModel = koinViewModel()
 ) {
     val modifier = Modifier.padding(dimensionResource(R.dimen.profile_horizontal_padding))
@@ -34,7 +35,7 @@ fun ProfileScreen(
             val comments by viewModel.comments.observeAsState()
             LazyColumn {
                 item {
-                    ProfileHeader(modifier = modifier)
+                    ProfileHeader(modifier = modifier, onNavigateToSettings)
                     CommentField(
                         modifier = modifier,
                         initialText = viewModel.currentComment.value,
@@ -53,7 +54,7 @@ fun ProfileScreen(
                                     vertical = dimensionResource(R.dimen.profile_vertical_padding),
                                     horizontal = dimensionResource(R.dimen.profile_horizontal_padding)
                                 ),
-                            comment = comment
+                            commentDTO = comment
                         )
                     }
                 }
@@ -63,9 +64,9 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ProfileHeader(modifier: Modifier = Modifier) {
+fun ProfileHeader(modifier: Modifier = Modifier, onNavigateToSettings: () -> Unit) {
     Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        SettingsButton(Modifier.align(Alignment.End))
+        SettingsButton(Modifier.align(Alignment.End), onNavigateToSettings)
         ProfileInfo()
     }
 }
@@ -90,16 +91,16 @@ fun ProfileInfo(modifier: Modifier = Modifier, viewModel: ProfileViewModel = koi
 }
 
 @Composable
-fun SettingsButton(modifier: Modifier = Modifier) {
-    IconButton(modifier = modifier, onClick = { }) {
+fun SettingsButton(modifier: Modifier = Modifier, onNavigateToSettings: () -> Unit) {
+    IconButton(modifier = modifier, onClick = { onNavigateToSettings() }) {
         Icon(Icons.Rounded.Settings, stringResource(R.string.settings_button_description))
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun Tags(modifier: Modifier = Modifier, labels: List<String>) {
-    FlowRow(modifier, horizontalArrangement = Arrangement.Center) {
+fun Tags(modifier: Modifier = Modifier, labels: List<String>, horizontalArrangement: Arrangement.Horizontal = Arrangement.Center) {
+    FlowRow(modifier, horizontalArrangement = horizontalArrangement) {
         labels.forEach {
             Tag(
                 modifier.padding(horizontal = dimensionResource(R.dimen.tag_horizontal_padding)),
