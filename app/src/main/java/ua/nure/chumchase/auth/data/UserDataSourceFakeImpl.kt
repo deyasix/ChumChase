@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import timber.log.Timber
 import ua.nure.chumchase.auth.data.entity.User
 import ua.nure.chumchase.auth.domain.OperationStatusMessage
 import ua.nure.chumchase.auth.domain.UserDataSource
@@ -54,8 +53,8 @@ class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : Us
 
     private suspend fun updateUsers() {
         users = withContext(Dispatchers.IO) {
-            val jsonResult = dataStore.data.map { it[USER_LIST] ?: "" }.first()
-            return@withContext if (jsonResult.isNotEmpty()) gsonConverter.fromJson(jsonResult)
+            val jsonResult = dataStore.data.map { it[USER_LIST] }.firstOrNull()
+            return@withContext if (jsonResult!= null) gsonConverter.fromJson(jsonResult)
             else listOf()
         }
     }
@@ -68,11 +67,13 @@ class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : Us
     }
 
     private suspend fun getToken(): BaseResult<String> {
-        val token = dataStore.data.map { it[LOGGED_USER_TOKEN] ?: "" }.first()
-        return BaseResult(data = token, isSuccess = true)
+        val token = dataStore.data.map { it[LOGGED_USER_TOKEN]}.firstOrNull()
+        return if (token == null) BaseResult(isSuccess = false)
+        else BaseResult(data = token, isSuccess = true)
     }
 
     override suspend fun getLoggedUser(): BaseResult<UserInfoDTO> {
+        delay(2000)
         val token = getToken().let { if (it.isSuccess) it.data else null }
         return if (token == null) BaseResult(isSuccess = false)
         else {

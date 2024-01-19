@@ -7,6 +7,7 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 import ua.nure.chumchase.auth.authModule
 import ua.nure.chumchase.feature.profile.profileModule
+import ua.nure.chumchase.main.mainModule
 
 class App : Application() {
     override fun onCreate() {
@@ -14,7 +15,7 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(authModule, profileModule)
+            modules(mainModule, authModule, profileModule)
         }
         initLogger()
     }
