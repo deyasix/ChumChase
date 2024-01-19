@@ -15,4 +15,7 @@
     <dimen name="profile_photo_size">80dp</dimen>
     <dimen name="comment_profile_photo_size">40dp</dimen>
 
+    <!-- Settings -->
+    <dimen name="settings_horizontal_padding">16dp</dimen>
+
 </resources>

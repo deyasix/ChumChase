@@ -1,11 +1,11 @@
 package ua.nure.chumchase.feature.settings.presentation
 
-import android.provider.ContactsContract.CommonDataKinds.Email
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
+import ua.nure.chumchase.auth.domain.UserDataSource
 import ua.nure.chumchase.core.base.BaseViewModel
 
-class SettingsViewModel : BaseViewModel() {
+class SettingsViewModel(private val userDataSource: UserDataSource) : BaseViewModel() {
     private val _login = MutableLiveData<String>()
     val login: LiveData<String>
         get() = _login
@@ -18,6 +18,10 @@ class SettingsViewModel : BaseViewModel() {
     val tags: LiveData<List<String>>
         get() = _tags
 
+    init {
+        getInfo()
+    }
+
     fun changeLogin(newLogin: String) {
         _login.value = newLogin
     }
@@ -28,5 +32,19 @@ class SettingsViewModel : BaseViewModel() {
 
     fun changeTags(newTags: List<String>) {
         _tags.value = newTags
+    }
+
+    private fun getInfo() {
+        startLoading()
+        viewModelScope.launch {
+            val result = userDataSource.getLoggedUser()
+            handleResult(result)
+            if (result.isSuccess) {
+                result.data?.let {
+                    _login.postValue(it.login)
+                    _tags.postValue(it.tags)
+                }
+            }
+        }
     }
 }

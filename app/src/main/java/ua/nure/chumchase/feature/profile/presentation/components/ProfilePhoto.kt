@@ -1,4 +1,4 @@
-package ua.nure.chumchase.feature.profile.components
+package ua.nure.chumchase.feature.profile.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border

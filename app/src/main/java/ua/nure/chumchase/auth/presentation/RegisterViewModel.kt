@@ -1,8 +1,6 @@
 package ua.nure.chumchase.auth.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.auth.domain.EmailFieldErrors
 import ua.nure.chumchase.auth.domain.ErrorMessage

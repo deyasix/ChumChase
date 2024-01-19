@@ -17,10 +17,7 @@ import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.core.components.LoadingScreen
-import ua.nure.chumchase.feature.profile.components.CommentField
-import ua.nure.chumchase.feature.profile.components.Tag
-import ua.nure.chumchase.feature.profile.components.Comment
-import ua.nure.chumchase.feature.profile.components.ProfilePhoto
+import ua.nure.chumchase.feature.profile.presentation.components.*
 
 @Composable
 fun ProfileScreen(
@@ -99,7 +96,11 @@ fun SettingsButton(modifier: Modifier = Modifier, onNavigateToSettings: () -> Un
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun Tags(modifier: Modifier = Modifier, labels: List<String>, horizontalArrangement: Arrangement.Horizontal = Arrangement.Center) {
+fun Tags(
+    modifier: Modifier = Modifier,
+    labels: List<String>,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Center
+) {
     FlowRow(modifier, horizontalArrangement = horizontalArrangement) {
         labels.forEach {
             Tag(

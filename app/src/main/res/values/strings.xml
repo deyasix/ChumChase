@@ -40,5 +40,6 @@
     <string name="settings_login_title">Login</string>
     <string name="settings_email_title">Email</string>
     <string name="settings_interests_title">Interests</string>
+    <string name="edit_button_description">Edit</string>
 
 </resources>
