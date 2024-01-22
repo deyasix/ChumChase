@@ -3,6 +3,7 @@ package ua.nure.chumchase.auth.domain
 import ua.nure.chumchase.auth.domain.model.LoginUserDTO
 import ua.nure.chumchase.auth.domain.model.RegisterUserDTO
 import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.feature.profile.domain.model.CommentDTO
 import ua.nure.chumchase.feature.profile.domain.model.UserInfoDTO
 
 interface UserDataSource {
@@ -13,5 +14,6 @@ interface UserDataSource {
     suspend fun getLoggedUser(): BaseResult<UserInfoDTO>
     suspend fun getUserById(id: Int): BaseResult<UserInfoDTO>
     suspend fun updateUserInfo(userInfoDTO: UserInfoDTO): BaseResult<Boolean>
+    suspend fun sendComment(commentDTO: CommentDTO, receiver: UserInfoDTO): BaseResult<Boolean>
 
 }

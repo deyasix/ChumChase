@@ -29,7 +29,8 @@ fun ProfileScreen(
         val isLoading by viewModel.isLoading.observeAsState()
         if (isLoading == true) LoadingScreen()
         else {
-            val comments by viewModel.comments.observeAsState()
+            val user by viewModel.userInfo.observeAsState()
+            val isCommentSending by viewModel.isCommentSending.observeAsState()
             LazyColumn {
                 item {
                     ProfileHeader(modifier = modifier, onNavigateToSettings)
@@ -40,8 +41,12 @@ fun ProfileScreen(
                         onChangeText = viewModel::setCurrentComment,
                         onSendComment = viewModel::sendComment
                     )
+                    if (isCommentSending == true) {
+                        LinearProgressIndicator(modifier = modifier)
+                    }
+
                 }
-                comments?.let {
+                user?.comments?.let {
                     items(it) { comment ->
                         Comment(
                             modifier = Modifier
@@ -70,20 +75,20 @@ fun ProfileHeader(modifier: Modifier = Modifier, onNavigateToSettings: () -> Uni
 
 @Composable
 fun ProfileInfo(modifier: Modifier = Modifier, viewModel: ProfileViewModel = koinViewModel()) {
-    val photoUrl by viewModel.photoUrl.observeAsState()
-    val login by viewModel.login.observeAsState()
-    val tags by viewModel.tags.observeAsState()
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        ProfilePhoto(
-            modifier = Modifier.size(dimensionResource(R.dimen.profile_photo_size)),
-            photoUrl = photoUrl
-        )
-        Text(
-            modifier = Modifier.padding(vertical = dimensionResource(R.dimen.profile_vertical_padding)),
-            text = login ?: "",
-            style = MaterialTheme.typography.bodyLarge
-        )
-        Tags(labels = tags ?: listOf())
+    val user by viewModel.userInfo.observeAsState()
+    user?.let {
+        Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+            ProfilePhoto(
+                modifier = Modifier.size(dimensionResource(R.dimen.profile_photo_size)),
+                photoUrl = it.photoUrl
+            )
+            Text(
+                modifier = Modifier.padding(vertical = dimensionResource(R.dimen.profile_vertical_padding)),
+                text = it.login,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Tags(labels = it.tags)
+        }
     }
 }
 

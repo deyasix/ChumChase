@@ -5,13 +5,12 @@ import ua.nure.chumchase.feature.profile.domain.model.CommentDTO
 
 data class Comment(
     val id: Int,
-    val author: String,
+    val author: User,
     val text: String,
-    val authorPhotoUrl: String?,
     val dateTime: String
-): ResponseEntity<CommentDTO> {
+) : ResponseEntity<CommentDTO> {
     override fun toDomainModel(): CommentDTO {
-        return CommentDTO(author, text, authorPhotoUrl, dateTime)
+        return CommentDTO(author.toDomainModel(), text, dateTime)
     }
 
 }

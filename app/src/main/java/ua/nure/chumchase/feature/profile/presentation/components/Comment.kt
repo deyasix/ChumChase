@@ -18,14 +18,15 @@ fun Comment(
     Row(modifier) {
         ProfilePhoto(
             modifier = Modifier
-                .size(dimensionResource(R.dimen.comment_profile_photo_size)).clickable {  },
-            photoUrl = commentDTO.authorPhotoUrl
+                .size(dimensionResource(R.dimen.comment_profile_photo_size))
+                .clickable { },
+            photoUrl = commentDTO.author.photoUrl
         )
         Column(
             Modifier.padding(start = dimensionResource(R.dimen.profile_vertical_padding)),
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(commentDTO.login, style = MaterialTheme.typography.bodyMedium)
+            Text(commentDTO.author.login, style = MaterialTheme.typography.bodyMedium)
             Text(commentDTO.text, style = MaterialTheme.typography.bodySmall)
             Text(commentDTO.dateTime, style = MaterialTheme.typography.labelSmall)
         }

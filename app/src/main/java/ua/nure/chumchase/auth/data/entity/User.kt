@@ -11,9 +11,9 @@ data class User(
     val tags: List<String> = listOf(),
     val photoUrl: String? = null,
     val comments: List<Comment> = listOf()
-):ResponseEntity<UserInfoDTO> {
+) : ResponseEntity<UserInfoDTO> {
     override fun toDomainModel(): UserInfoDTO {
-        return UserInfoDTO(login, tags, photoUrl, comments.map { it.toDomainModel() })
+        return UserInfoDTO(id, login, tags, photoUrl, comments.map { it.toDomainModel() })
     }
 
 }

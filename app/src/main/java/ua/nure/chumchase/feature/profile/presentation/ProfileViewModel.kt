@@ -7,26 +7,19 @@ import kotlinx.coroutines.launch
 import ua.nure.chumchase.core.base.BaseViewModel
 import ua.nure.chumchase.feature.profile.domain.UserInfoRepository
 import ua.nure.chumchase.feature.profile.domain.model.CommentDTO
+import ua.nure.chumchase.feature.profile.domain.model.UserInfoDTO
 import java.time.LocalDateTime
 
 class ProfileViewModel(private val userInfoRepository: UserInfoRepository) : BaseViewModel() {
-    private val _login = MutableLiveData<String>()
-    val login: LiveData<String>
-        get() = _login
-    private val _photoUrl = MutableLiveData<String?>()
-    val photoUrl: LiveData<String?>
-        get() = _photoUrl
-
-    private val _tags = MutableLiveData<List<String>>()
-    val tags: LiveData<List<String>>
-        get() = _tags
-
-    private val _comments = MutableLiveData<List<CommentDTO>>()
-    val comments: LiveData<List<CommentDTO>>
-        get() = _comments
     private val _currentComment = MutableLiveData<String>()
     val currentComment: LiveData<String>
         get() = _currentComment
+    private val _userInfo = MutableLiveData<UserInfoDTO>()
+    val userInfo: LiveData<UserInfoDTO>
+        get() = _userInfo
+    private val _isCommentSending = MutableLiveData<Boolean>()
+    val isCommentSending: LiveData<Boolean>
+        get() = _isCommentSending
 
     fun setCurrentComment(text: String) {
         _currentComment.value = text
@@ -41,10 +34,7 @@ class ProfileViewModel(private val userInfoRepository: UserInfoRepository) : Bas
         viewModelScope.launch {
             val result = userInfoRepository.getLoggedUserInfo()
             result.data?.let {
-                _login.postValue(it.login)
-                _photoUrl.postValue(it.photoUrl)
-                _tags.postValue(it.tags)
-                _comments.postValue(it.comments)
+                _userInfo.postValue(it)
             }
             handleResult(result)
         }
@@ -52,11 +42,17 @@ class ProfileViewModel(private val userInfoRepository: UserInfoRepository) : Bas
 
     fun sendComment() {
         val dateTime = LocalDateTime.now().toString()
-        val commentDTO =
-            CommentDTO(_login.value ?: "", _currentComment.value ?: "", _photoUrl.value, dateTime)
-        _comments.value?.reversed()?.toMutableList()?.let {
-            it.add(commentDTO)
-            _comments.value = it.reversed()
+        userInfo.value?.let {
+            val commentDTO =
+                CommentDTO(it, _currentComment.value ?: "", dateTime)
+            _isCommentSending.value = true
+            viewModelScope.launch {
+                userInfoRepository.sendComment(commentDTO, it)
+                userInfoRepository.getLoggedUserInfo().data?.let {
+                    _userInfo.postValue(it)
+                }
+                _isCommentSending.postValue(false)
+            }
         }
     }
 }
