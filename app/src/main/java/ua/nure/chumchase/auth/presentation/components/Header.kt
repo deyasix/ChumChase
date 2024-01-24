@@ -20,7 +20,7 @@ fun Header(modifier: Modifier = Modifier) {
         modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary)
-            .padding(dimensionResource(R.dimen.header_padding))
+            .padding(dimensionResource(R.dimen.base_horizontal_padding))
     ) {
         Column(modifier = Modifier.align(Alignment.Center)) {
             Text(

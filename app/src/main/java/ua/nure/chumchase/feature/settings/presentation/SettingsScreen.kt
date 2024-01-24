@@ -21,7 +21,7 @@ fun SettingsScreen(viewModel: SettingsViewModel = koinViewModel()) {
     val isLoading by viewModel.isLoading.observeAsState()
     if (isLoading == true) LoadingScreen()
     else Surface(color = MaterialTheme.colorScheme.surface) {
-        Column(modifier = Modifier.padding(dimensionResource(R.dimen.settings_horizontal_padding))) {
+        Column(modifier = Modifier.padding(dimensionResource(R.dimen.base_horizontal_padding))) {
             val login by viewModel.login.observeAsState()
             val email by viewModel.email.observeAsState()
             val tags by viewModel.tags.observeAsState()

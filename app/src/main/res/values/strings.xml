@@ -42,4 +42,9 @@
     <string name="settings_interests_title">Interests</string>
     <string name="edit_button_description">Edit</string>
 
+    <!-- Friends -->
+    <string name="empty_friends_list_placeholder">No friends yet</string>
+    <string name="search_placeholder">Search…</string>
+    <string name="search_icon_description">Search icon</string>
+
 </resources>

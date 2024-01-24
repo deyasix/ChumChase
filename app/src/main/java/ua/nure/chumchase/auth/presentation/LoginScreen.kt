@@ -53,7 +53,7 @@ fun LoginForm(
     val login by viewModel.login.observeAsState()
     val password by viewModel.password.observeAsState()
     val isLoading by viewModel.isLoading.observeAsState()
-    val padding = dimensionResource(R.dimen.login_register_form_padding)
+    val padding = dimensionResource(R.dimen.base_horizontal_padding)
     Column(
         modifier
             .padding(padding)

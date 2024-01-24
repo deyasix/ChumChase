@@ -24,7 +24,7 @@ fun ProfileScreen(
     onNavigateToSettings: () -> Unit,
     viewModel: ProfileViewModel = koinViewModel()
 ) {
-    val modifier = Modifier.padding(dimensionResource(R.dimen.profile_horizontal_padding))
+    val modifier = Modifier.padding(dimensionResource(R.dimen.base_horizontal_padding))
     Surface(color = MaterialTheme.colorScheme.surface) {
         val isLoading by viewModel.isLoading.observeAsState()
         if (isLoading == true) LoadingScreen()
@@ -54,7 +54,7 @@ fun ProfileScreen(
                                 .fillMaxWidth()
                                 .padding(
                                     vertical = dimensionResource(R.dimen.profile_vertical_padding),
-                                    horizontal = dimensionResource(R.dimen.profile_horizontal_padding)
+                                    horizontal = dimensionResource(R.dimen.base_horizontal_padding)
                                 ),
                             commentDTO = comment
                         )

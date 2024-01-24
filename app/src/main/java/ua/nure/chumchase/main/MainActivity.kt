@@ -21,6 +21,7 @@ import ua.nure.chumchase.core.NavItems
 import ua.nure.chumchase.core.components.LoadingScreen
 import ua.nure.chumchase.feature.profile.presentation.ProfileScreen
 import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
+import ua.nure.chumchase.feature.friends.presentation.FriendsScreen
 import ua.nure.chumchase.feature.settings.presentation.SettingsScreen
 
 class MainActivity : ComponentActivity() {
@@ -63,7 +64,7 @@ fun AppScreen() {
                 Text(stringResource(BottomNavItems.CHAT.labelId))
             }
             composable(BottomNavItems.FRIENDS.route) {
-                Text(stringResource(BottomNavItems.FRIENDS.labelId))
+                FriendsScreen()
             }
             composable(BottomNavItems.PROFILE.route) {
                 ProfileScreen({ navController.navigate(NavItems.SETTINGS.route) })
