@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
+import ua.nure.chumchase.core.components.LoadingScreen
 import ua.nure.chumchase.feature.friends.domain.FriendDTO
 import ua.nure.chumchase.feature.friends.presentation.components.SearchBar
 import ua.nure.chumchase.feature.profile.presentation.components.ProfilePhoto
@@ -23,15 +24,21 @@ import ua.nure.chumchase.feature.profile.presentation.components.ProfilePhoto
 @Composable
 fun FriendsScreen(viewModel: FriendsViewModel = koinViewModel()) {
     Surface(color = MaterialTheme.colorScheme.surface, modifier = Modifier.fillMaxSize()) {
-        val friends by viewModel.friends.observeAsState()
-        val modifier = Modifier.padding(dimensionResource(R.dimen.base_horizontal_padding))
-        Column {
-            SearchBar(modifier.fillMaxWidth(), viewModel::search)
-            Box(modifier.fillMaxSize()) {
-                FriendsList(
-                    Modifier.align(Alignment.Center),
-                    friends ?: listOf()
-                )
+        val isLoading by viewModel.isLoading.observeAsState()
+        if (isLoading == true) {
+            LoadingScreen()
+        } else {
+            val friends by viewModel.friends.observeAsState()
+            val modifier = Modifier.padding(dimensionResource(R.dimen.base_horizontal_padding))
+            val isSearching by viewModel.isSearching.observeAsState()
+            Column {
+                SearchBar(modifier.fillMaxWidth(), viewModel::search, isSearching?:false)
+                Box(modifier.fillMaxSize()) {
+                    FriendsList(
+                        Modifier.align(Alignment.Center),
+                        friends ?: listOf()
+                    )
+                }
             }
         }
     }
