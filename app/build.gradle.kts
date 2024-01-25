@@ -15,6 +15,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "STREAM_API_KEY", "\"4pzprh9b3bsx\"")
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -94,6 +96,11 @@ dependencies {
 
     // landscapist (glide, coil, fresco)
     implementation("com.github.skydoves:landscapist-glide:2.2.13")
+
+    // stream chat
+    val streamChat = "6.0.13"
+    implementation("io.getstream:stream-chat-android-offline:$streamChat")
+    implementation("io.getstream:stream-chat-android-compose:$streamChat")
 
     // test
     testImplementation("junit:junit:4.13.2")

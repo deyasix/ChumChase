@@ -6,6 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import ua.nure.chumchase.auth.authModule
+import ua.nure.chumchase.feature.chat.chatModule
 import ua.nure.chumchase.feature.friends.friendsModule
 import ua.nure.chumchase.feature.profile.profileModule
 import ua.nure.chumchase.feature.settings.settingsModule
@@ -17,7 +18,14 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(mainModule, authModule, profileModule, settingsModule, friendsModule)
+            modules(
+                mainModule,
+                authModule,
+                profileModule,
+                settingsModule,
+                friendsModule,
+                chatModule
+            )
         }
         initLogger()
     }

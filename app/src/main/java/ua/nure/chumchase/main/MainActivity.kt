@@ -21,6 +21,7 @@ import ua.nure.chumchase.core.NavItems
 import ua.nure.chumchase.core.components.LoadingScreen
 import ua.nure.chumchase.feature.profile.presentation.ProfileScreen
 import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
+import ua.nure.chumchase.feature.chat.presentation.ChatScreen
 import ua.nure.chumchase.feature.friends.presentation.FriendsScreen
 import ua.nure.chumchase.feature.settings.presentation.SettingsScreen
 
@@ -61,7 +62,7 @@ fun AppScreen() {
                 Text(stringResource(BottomNavItems.RECOMMENDATIONS.labelId))
             }
             composable(BottomNavItems.CHAT.route) {
-                Text(stringResource(BottomNavItems.CHAT.labelId))
+                ChatScreen()
             }
             composable(BottomNavItems.FRIENDS.route) {
                 FriendsScreen()

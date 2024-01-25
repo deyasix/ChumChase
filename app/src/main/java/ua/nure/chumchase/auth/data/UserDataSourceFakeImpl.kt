@@ -28,15 +28,18 @@ class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : Us
     }
 
     override suspend fun login(loginUserDTO: LoginUserDTO): BaseResult<Boolean> {
-        delay(2000)
         val result =
             users.find { it.login == loginUserDTO.login && it.password == loginUserDTO.password }
-        return if (result != null) saveToken(result)
-        else BaseResult(isSuccess = false, error = OperationStatusMessage.FAILURE)
+        return if (result != null) {
+            saveToken(result)
+            BaseResult(isSuccess = true)
+        } else BaseResult(
+            isSuccess = false,
+            error = OperationStatusMessage.FAILURE
+        )
     }
 
     override suspend fun register(registerUserDTO: RegisterUserDTO): BaseResult<Boolean> {
-        delay(1000)
         val result = users.toMutableList().plus(
             User(
                 getNextId(),
@@ -60,11 +63,10 @@ class UserDataSourceFakeImpl(private val dataStore: DataStore<Preferences>) : Us
         }
     }
 
-    private suspend fun saveToken(user: User): BaseResult<Boolean> {
+    private suspend fun saveToken(user: User) {
         dataStore.edit {
             it[LOGGED_USER_TOKEN] = gsonConverter.toJson(user, User::class.java)
         }
-        return BaseResult(isSuccess = true)
     }
 
     private suspend fun getToken(): BaseResult<String> {
