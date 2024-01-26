@@ -32,7 +32,7 @@ fun FriendsScreen(viewModel: FriendsViewModel = koinViewModel()) {
             val modifier = Modifier.padding(dimensionResource(R.dimen.base_horizontal_padding))
             val isSearching by viewModel.isSearching.observeAsState()
             Column {
-                SearchBar(modifier.fillMaxWidth(), viewModel::search, isSearching?:false)
+                SearchBar(modifier.fillMaxWidth(), viewModel::search, isSearching ?: false)
                 Box(modifier.fillMaxSize()) {
                     FriendsList(
                         Modifier.align(Alignment.Center),
@@ -47,7 +47,12 @@ fun FriendsScreen(viewModel: FriendsViewModel = koinViewModel()) {
 
 @Composable
 fun FriendsList(modifier: Modifier = Modifier, friends: List<FriendDTO>) {
-    if (friends.isEmpty()) Text(stringResource(R.string.empty_friends_list_placeholder), modifier)
+    if (friends.isEmpty()) Text(
+        stringResource(R.string.empty_friends_list_placeholder),
+        modifier,
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.onSurface
+    )
     else LazyColumn(modifier) {
         items(friends) {
             Friend(friend = it, modifier = Modifier.padding(vertical = 8.dp))

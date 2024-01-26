@@ -1,7 +1,6 @@
 package ua.nure.chumchase.feature.chat.domain
 
 import io.getstream.chat.android.client.ChatClient
-import io.getstream.chat.android.models.User
 import ua.nure.chumchase.auth.domain.UserDataSource
 import ua.nure.chumchase.core.base.BaseResult
 

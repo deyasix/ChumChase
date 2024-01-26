@@ -14,20 +14,44 @@ import ua.nure.chumchase.R
 import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
 
 @Composable
-fun SearchBar(modifier: Modifier = Modifier, onSearch: (String) -> Unit, isSearching: Boolean = false) {
+fun SearchBar(
+    modifier: Modifier = Modifier,
+    onSearch: (String) -> Unit,
+    isSearching: Boolean = false
+) {
     var text by rememberSaveable {
         mutableStateOf("")
     }
-    OutlinedTextField(modifier = modifier, value = text, onValueChange = {
-        text = it
-        onSearch(it)
-    }, placeholder = {
-        Text(stringResource(R.string.search_placeholder))
-    }, leadingIcon = {
-        Icon(Icons.Rounded.Search, stringResource(R.string.search_icon_description))
-    }, trailingIcon = {
-        if (isSearching) CircularProgressIndicator(Modifier.size(24.dp))
-    })
+    OutlinedTextField(
+        modifier = modifier,
+        value = text,
+        onValueChange = {
+            text = it
+            onSearch(it)
+        },
+        placeholder = {
+            Text(
+                stringResource(R.string.search_placeholder),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        },
+        leadingIcon = {
+            Icon(
+                Icons.Rounded.Search,
+                stringResource(R.string.search_icon_description),
+                tint = MaterialTheme.colorScheme.secondary
+            )
+        },
+        trailingIcon = {
+            if (isSearching) CircularProgressIndicator(Modifier.size(24.dp))
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
+            focusedTextColor = MaterialTheme.colorScheme.secondary
+        ),
+        singleLine = true
+    )
 }
 
 @Composable

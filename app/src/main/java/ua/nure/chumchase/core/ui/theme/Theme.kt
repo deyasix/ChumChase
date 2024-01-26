@@ -10,40 +10,24 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-//private val DarkColorScheme = darkColorScheme(
-//    primary = Orange,
-//    onPrimary = LightYellow,
-//    secondary = Green,
-//    tertiary = Pink80
-//)
-
 private val LightColorScheme = lightColorScheme(
     primary = Orange,
     onPrimary = LightYellow,
-    secondary = LightGreen,
+    secondary = Brown,
     onSecondary = LightBeige,
     background = LightBeige,
     surface = LightBeige,
+    onSurface = LightBrown,
     tertiary = Peach,
-    error = ErrorRed
+    error = ErrorRed,
+    inversePrimary = LightGreen
 )
 
 @Composable
 fun ChumChaseTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-//    val colorScheme = when {
-//        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-//            val context = LocalContext.current
-//            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-//        }
-//
-//        darkTheme -> DarkColorScheme
-//        else -> LightColorScheme
-//    }
     val colorScheme = LightColorScheme
     val view = LocalView.current
     if (!view.isInEditMode) {
