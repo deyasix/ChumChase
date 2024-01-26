@@ -22,6 +22,7 @@ fun SearchBar(
     var text by rememberSaveable {
         mutableStateOf("")
     }
+    val color = MaterialTheme.colorScheme.secondary
     OutlinedTextField(
         modifier = modifier,
         value = text,
@@ -33,22 +34,22 @@ fun SearchBar(
             Text(
                 stringResource(R.string.search_placeholder),
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.secondary
+                color = color
             )
         },
         leadingIcon = {
             Icon(
                 Icons.Rounded.Search,
                 stringResource(R.string.search_icon_description),
-                tint = MaterialTheme.colorScheme.secondary
+                tint = color
             )
         },
         trailingIcon = {
             if (isSearching) CircularProgressIndicator(Modifier.size(24.dp))
         },
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = MaterialTheme.colorScheme.secondary,
-            focusedTextColor = MaterialTheme.colorScheme.secondary
+            unfocusedBorderColor = color,
+            focusedTextColor = color
         ),
         singleLine = true
     )

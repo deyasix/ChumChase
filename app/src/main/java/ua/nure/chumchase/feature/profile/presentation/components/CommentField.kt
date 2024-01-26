@@ -1,7 +1,6 @@
 package ua.nure.chumchase.feature.profile.presentation.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Send
@@ -12,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import ua.nure.chumchase.R
 
 @Composable
@@ -20,9 +20,11 @@ fun CommentField(
     initialText: String? = null,
     placeholder: String? = null,
     onChangeText: (String) -> Unit,
-    onSendComment: () -> Unit
+    onSendComment: () -> Unit,
+    isCommentSending: Boolean? = false
 ) {
     val textStyle = MaterialTheme.typography.bodyMedium
+    val color = MaterialTheme.colorScheme.secondary
     Row(
         modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -30,7 +32,7 @@ fun CommentField(
     ) {
         var currentComment by rememberSaveable { mutableStateOf(initialText ?: "") }
         OutlinedTextField(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(7f),
             value = currentComment,
             onValueChange = {
                 currentComment = it
@@ -38,21 +40,35 @@ fun CommentField(
             },
             placeholder = {
                 placeholder?.let {
-                    Text(it, style = textStyle)
+                    Text(it, style = textStyle, color = color)
                 }
             },
             textStyle = textStyle,
             singleLine = false,
             keyboardOptions = KeyboardOptions(
                 autoCorrect = true, keyboardType = KeyboardType.Text
+            ),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = color,
+                focusedTextColor = color
             )
         )
         IconButton(onClick = {
-            onSendComment()
-            currentComment = ""
-            onChangeText(currentComment)
-        }) {
-            Icon(Icons.Rounded.Send, stringResource(R.string.send_comment_description))
+            if (isCommentSending != true) {
+                onSendComment()
+                currentComment = ""
+                onChangeText(currentComment)
+            }
+        }, modifier = Modifier.weight(1f)) {
+            if (isCommentSending == true) CircularProgressIndicator(
+                strokeWidth = 2.dp,
+                modifier = Modifier.size(24.dp)
+            )
+            else Icon(
+                Icons.Rounded.Send,
+                stringResource(R.string.send_comment_description),
+                tint = color
+            )
         }
     }
 }

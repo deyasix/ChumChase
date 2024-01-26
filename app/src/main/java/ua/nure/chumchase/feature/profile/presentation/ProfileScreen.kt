@@ -39,12 +39,9 @@ fun ProfileScreen(
                         initialText = viewModel.currentComment.value,
                         placeholder = stringResource(R.string.comment_field_placeholder),
                         onChangeText = viewModel::setCurrentComment,
-                        onSendComment = viewModel::sendComment
+                        onSendComment = viewModel::sendComment,
+                        isCommentSending = isCommentSending
                     )
-                    if (isCommentSending == true) {
-                        LinearProgressIndicator(modifier = modifier)
-                    }
-
                 }
                 user?.comments?.let {
                     items(it) { comment ->
