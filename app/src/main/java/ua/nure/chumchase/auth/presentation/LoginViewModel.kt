@@ -33,13 +33,13 @@ class LoginViewModel(private val authRepository: AuthRepository) :
     fun login() {
         startLoading()
         viewModelScope.launch {
-            val _login = login.value
-            val _password = password.value
-            val result = if (_login == null || _password == null) BaseResult(
+            val loginValue = login.value
+            val passwordValue = password.value
+            val result = if (loginValue == null || passwordValue == null) BaseResult(
                 isSuccess = false,
                 error = BaseFieldErrors.EMPTY
             )
-            else authRepository.login(LoginUserDTO(_login, _password))
+            else authRepository.login(LoginUserDTO(loginValue, passwordValue))
             handleResult(result)
         }
     }

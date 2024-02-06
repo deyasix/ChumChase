@@ -1,6 +1,5 @@
 package ua.nure.chumchase.auth.presentation
 
-import android.util.Pair
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.auth.domain.AuthRepository
@@ -78,13 +77,13 @@ class RegisterViewModel(private val authRepository: AuthRepository) : BaseViewMo
     fun register() {
         startLoading()
         viewModelScope.launch {
-            val _login = login.value
-            val _email = email.value
-            val _password = password.value
-            val result = if (_login == null || _password == null || _email == null) BaseResult(
+            val loginValue = login.value
+            val emailValue = email.value
+            val passwordValue = password.value
+            val result = if (loginValue == null || passwordValue == null || emailValue == null) BaseResult(
                 isSuccess = false, error = BaseFieldErrors.EMPTY
             )
-            else authRepository.register(RegisterUserDTO(_login, _password, _email))
+            else authRepository.register(RegisterUserDTO(loginValue, passwordValue, emailValue))
             handleResult(result)
         }
     }
