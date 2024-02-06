@@ -3,8 +3,28 @@ package ua.nure.chumchase.auth.domain
 import android.util.Patterns
 import ua.nure.chumchase.R
 
+object Keys {
+    const val USER_EXISTED = "USER_EXISTED"
+    const val INVALID_DATA = "INVALID_DATA"
+}
+
 interface ErrorMessage {
     val message: Int
+}
+
+enum class AuthResponseMessage(val status: String) : ErrorMessage {
+    USER_EXISTED(Keys.USER_EXISTED) {
+        override val message: Int = R.string.error_user_existed
+    },
+    INVALID_DATA(Keys.INVALID_DATA) {
+        override val message: Int = R.string.invalid_login_or_password
+    };
+
+    companion object {
+        fun getResponseMessage(status: String?): ErrorMessage {
+            return values().find { it.status == status } ?: OperationStatusMessage.FAILURE
+        }
+    }
 }
 
 enum class BaseFieldErrors : ErrorMessage {
@@ -13,7 +33,7 @@ enum class BaseFieldErrors : ErrorMessage {
     }
 }
 
-enum class OperationStatusMessage: ErrorMessage {
+enum class OperationStatusMessage : ErrorMessage {
     FAILURE {
         override val message = R.string.failed_operation
     },

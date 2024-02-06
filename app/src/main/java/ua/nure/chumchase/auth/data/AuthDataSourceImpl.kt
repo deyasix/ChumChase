@@ -8,9 +8,11 @@ import kotlinx.coroutines.flow.first
 import ua.nure.chumchase.auth.data.entity.LoginUser
 import ua.nure.chumchase.auth.data.entity.RegisterUser
 import ua.nure.chumchase.auth.domain.AuthDataSource
+import ua.nure.chumchase.auth.domain.AuthResponseMessage
 import ua.nure.chumchase.auth.domain.model.LoginUserDTO
 import ua.nure.chumchase.auth.domain.model.RegisterUserDTO
 import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.core.utils.getErrorMessage
 
 class AuthDataSourceImpl(
     private val authService: AuthService,
@@ -25,7 +27,10 @@ class AuthDataSourceImpl(
                 }
             }
             BaseResult(isSuccess = true)
-        } else BaseResult(isSuccess = false)
+        } else {
+            val message = response.errorBody()?.getErrorMessage()
+            BaseResult(isSuccess = false, error = AuthResponseMessage.getResponseMessage(message))
+        }
     }
 
     override suspend fun register(registerUserDTO: RegisterUserDTO): BaseResult<Boolean> {
@@ -38,7 +43,10 @@ class AuthDataSourceImpl(
         )
         return if (response.isSuccessful) {
             BaseResult(isSuccess = true)
-        } else BaseResult(isSuccess = false)
+        } else {
+            val error = response.errorBody()?.getErrorMessage()
+            BaseResult(isSuccess = false, error = AuthResponseMessage.getResponseMessage(error))
+        }
     }
 
     override suspend fun isUserLogged(): BaseResult<Boolean> {

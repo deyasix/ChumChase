@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">ChumChase</string>
     <string name="app_tagline">Connect, Chat, Cherish</string>
+
+    <string name="field_should_be_not_empty">Field should be not empty</string>
+    <string name="failed_operation">Failure! Something went wrong…</string>
+    <string name="success_operation">Success!</string>
+
+    <!-- Auth -->
     <string name="login_label">Login</string>
     <string name="password_label">Password</string>
     <string name="login_button">Login</string>
@@ -11,12 +17,11 @@
     <string name="repeat_password_label">Repeat password</string>
     <string name="dont_have_an_account">Don\'t have an account?</string>
     <string name="already_have_an_account">Already have an account?</string>
-    <string name="field_should_be_not_empty">Field should be not empty</string>
+    <string name="error_user_existed">User already existed!</string>
+    <string name="invalid_login_or_password">Invalid login or password!</string>
     <string name="password_too_short">Password is too short, minimum length is 6 symbols</string>
     <string name="password_dont_match">Passwords don\'t match</string>
     <string name="invalid_email_error">Email is invalid</string>
-    <string name="failed_operation">Failure! Something went wrong…</string>
-    <string name="success_operation">Success!</string>
 
     <!-- Navigation -->
     <string name="login_nav">to_login</string>

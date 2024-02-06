@@ -1,3 +1,3 @@
 package ua.nure.chumchase.auth.data.entity
 
-data class AccessToken(val access_token: String)
+data class AccessToken(val access_token: String, val message: String)
