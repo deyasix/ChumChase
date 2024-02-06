@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import kotlinx.coroutines.flow.first
 import ua.nure.chumchase.auth.data.entity.LoginUser
 import ua.nure.chumchase.auth.data.entity.RegisterUser
 import ua.nure.chumchase.auth.domain.AuthDataSource
@@ -39,6 +40,13 @@ class AuthDataSourceImpl(
             BaseResult(isSuccess = true)
         } else BaseResult(isSuccess = false)
     }
+
+    override suspend fun isUserLogged(): BaseResult<Boolean> {
+        val token = dataStore.data.first()[LOGGED_USER_TOKEN]
+        return if (token != null) BaseResult(isSuccess = true, data = true)
+        else BaseResult(isSuccess = true, data = false)
+    }
+
 
     companion object {
         private val LOGGED_USER_TOKEN = stringPreferencesKey("LOGGED_USER_TOKEN")

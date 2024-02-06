@@ -74,7 +74,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$navigation")
 
     // material
-    val material = "1.6.0"
+    val material = "1.5.4" // don't upgrade to 1.6.0 due to progress indicator crash
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material:$material")
     implementation("androidx.compose.material:material-icons-extended-android:$material")
