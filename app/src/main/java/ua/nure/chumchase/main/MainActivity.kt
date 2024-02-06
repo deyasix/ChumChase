@@ -18,9 +18,9 @@ import ua.nure.chumchase.BottomNavigationBar
 import ua.nure.chumchase.auth.presentation.AuthScreen
 import ua.nure.chumchase.core.BottomNavItems
 import ua.nure.chumchase.core.NavItems
-import ua.nure.chumchase.core.components.LoadingScreen
+import ua.nure.chumchase.core.presentation.components.LoadingScreen
 import ua.nure.chumchase.feature.profile.presentation.ProfileScreen
-import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
+import ua.nure.chumchase.core.presentation.theme.ChumChaseTheme
 import ua.nure.chumchase.feature.chat.presentation.ChatScreen
 import ua.nure.chumchase.feature.friends.presentation.FriendsScreen
 import ua.nure.chumchase.feature.settings.presentation.SettingsScreen

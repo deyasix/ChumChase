@@ -9,8 +9,8 @@ import io.getstream.chat.android.compose.ui.theme.ChatTheme
 import io.getstream.chat.android.compose.ui.theme.StreamColors
 import io.getstream.chat.android.compose.ui.theme.StreamTypography
 import org.koin.androidx.compose.koinViewModel
-import ua.nure.chumchase.core.components.LoadingScreen
-import ua.nure.chumchase.core.ui.theme.ManropeFontFamily
+import ua.nure.chumchase.core.presentation.components.LoadingScreen
+import ua.nure.chumchase.core.presentation.theme.ManropeFontFamily
 
 @Composable
 fun ChatScreen(viewModel: ChatViewModel = koinViewModel()) {

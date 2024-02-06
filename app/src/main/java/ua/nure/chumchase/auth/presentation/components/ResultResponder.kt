@@ -19,7 +19,7 @@ fun ResultResponder(
         LaunchedEffect(isSuccess, snackBarHostState) {
             val message = viewModel.error.value ?: OperationStatusMessage.FAILURE.message
             if (isSuccess == true) onSuccess()
-            else snackBarHostState.showSnackbar(context.getString(message))
+            else snackBarHostState.showSnackbar("G")
         }
     }
 }

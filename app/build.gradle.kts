@@ -17,9 +17,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "STREAM_API_KEY", "\"4pzprh9b3bsx\"")
+        buildConfigField("String", "BASE_URL", "\"https://chumchase.onrender.com/api/\"")
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
 
     buildTypes {
@@ -93,6 +95,7 @@ dependencies {
     val retrofit = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit")
     implementation("com.squareup.retrofit2:converter-gson:$retrofit")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // landscapist (glide, coil, fresco)
     implementation("com.github.skydoves:landscapist-glide:2.2.13")

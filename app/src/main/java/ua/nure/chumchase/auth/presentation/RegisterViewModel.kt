@@ -1,14 +1,18 @@
 package ua.nure.chumchase.auth.presentation
 
+import android.util.Pair
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import ua.nure.chumchase.auth.domain.AuthRepository
+import ua.nure.chumchase.auth.domain.BaseFieldErrors
 import ua.nure.chumchase.auth.domain.EmailFieldErrors
 import ua.nure.chumchase.auth.domain.ErrorMessage
 import ua.nure.chumchase.auth.domain.PasswordFieldErrors
-import ua.nure.chumchase.auth.domain.RegisterUseCase
+import ua.nure.chumchase.auth.domain.model.RegisterUserDTO
+import ua.nure.chumchase.core.base.BaseResult
 import ua.nure.chumchase.core.base.BaseViewModel
 
-class RegisterViewModel(private val registerUseCase: RegisterUseCase) : BaseViewModel() {
+class RegisterViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
     private val _login = MutableLiveData<String>()
     val login: LiveData<String>
         get() = _login
@@ -74,7 +78,13 @@ class RegisterViewModel(private val registerUseCase: RegisterUseCase) : BaseView
     fun register() {
         startLoading()
         viewModelScope.launch {
-            val result = registerUseCase.execute(login.value, password.value, email.value)
+            val _login = login.value
+            val _email = email.value
+            val _password = password.value
+            val result = if (_login == null || _password == null || _email == null) BaseResult(
+                isSuccess = false, error = BaseFieldErrors.EMPTY
+            )
+            else authRepository.register(RegisterUserDTO(_login, _password, _email))
             handleResult(result)
         }
     }

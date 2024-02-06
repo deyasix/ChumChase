@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ua.nure.chumchase.R
-import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
+import ua.nure.chumchase.core.presentation.theme.ChumChaseTheme
 
 @Composable
 fun SearchBar(

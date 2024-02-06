@@ -16,7 +16,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
-import ua.nure.chumchase.core.components.LoadingScreen
+import ua.nure.chumchase.core.presentation.components.LoadingScreen
 import ua.nure.chumchase.feature.profile.presentation.components.*
 
 @Composable

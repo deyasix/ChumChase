@@ -11,8 +11,8 @@ import androidx.compose.ui.text.font.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import ua.nure.chumchase.R
-import ua.nure.chumchase.core.ui.theme.ChumChaseTheme
-import ua.nure.chumchase.core.ui.theme.LogoFamily
+import ua.nure.chumchase.core.presentation.theme.ChumChaseTheme
+import ua.nure.chumchase.core.presentation.theme.LogoFamily
 
 @Composable
 fun Header(modifier: Modifier = Modifier) {

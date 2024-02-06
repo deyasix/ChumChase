@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
-import ua.nure.chumchase.core.components.LoadingScreen
+import ua.nure.chumchase.core.presentation.components.LoadingScreen
 import ua.nure.chumchase.feature.friends.domain.FriendDTO
 import ua.nure.chumchase.feature.friends.presentation.components.SearchBar
 import ua.nure.chumchase.feature.profile.presentation.components.ProfilePhoto

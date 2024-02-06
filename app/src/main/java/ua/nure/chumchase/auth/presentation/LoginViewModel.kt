@@ -2,11 +2,13 @@ package ua.nure.chumchase.auth.presentation
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import ua.nure.chumchase.auth.domain.LoginUseCase
+import ua.nure.chumchase.auth.domain.AuthRepository
+import ua.nure.chumchase.auth.domain.BaseFieldErrors
+import ua.nure.chumchase.auth.domain.model.LoginUserDTO
+import ua.nure.chumchase.core.base.BaseResult
 import ua.nure.chumchase.core.base.BaseViewModel
 
-class LoginViewModel(private val loginUseCase: LoginUseCase) :
+class LoginViewModel(private val authRepository: AuthRepository) :
     BaseViewModel() {
     private val _login = MutableLiveData<String>()
     val login: LiveData<String>
@@ -31,10 +33,14 @@ class LoginViewModel(private val loginUseCase: LoginUseCase) :
     fun login() {
         startLoading()
         viewModelScope.launch {
-            val result = loginUseCase.execute(login.value, password.value)
+            val _login = login.value
+            val _password = password.value
+            val result = if (_login == null || _password == null) BaseResult(
+                isSuccess = false,
+                error = BaseFieldErrors.EMPTY
+            )
+            else authRepository.login(LoginUserDTO(_login, _password))
             handleResult(result)
-            if (result.isSuccess) Timber.d("Success")
-            else Timber.d("Failure")
         }
     }
 }

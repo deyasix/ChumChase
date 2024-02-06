@@ -1,4 +1,4 @@
-package ua.nure.chumchase.core.components
+package ua.nure.chumchase.core.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

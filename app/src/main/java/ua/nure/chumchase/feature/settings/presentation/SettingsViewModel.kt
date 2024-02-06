@@ -2,10 +2,11 @@ package ua.nure.chumchase.feature.settings.presentation
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import ua.nure.chumchase.auth.domain.UserDataSource
+import ua.nure.chumchase.auth.domain.AuthRepository
+import ua.nure.chumchase.core.base.BaseResult
 import ua.nure.chumchase.core.base.BaseViewModel
 
-class SettingsViewModel(private val userDataSource: UserDataSource) : BaseViewModel() {
+class SettingsViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
     private val _login = MutableLiveData<String>()
     val login: LiveData<String>
         get() = _login
@@ -37,14 +38,15 @@ class SettingsViewModel(private val userDataSource: UserDataSource) : BaseViewMo
     private fun getInfo() {
         startLoading()
         viewModelScope.launch {
-            val result = userDataSource.getLoggedUser()
+            //val result = authRepository.getLoggedUser()
+            val result = BaseResult<Boolean>(isSuccess = false)
             handleResult(result)
-            if (result.isSuccess) {
-                result.data?.let {
-                    _login.postValue(it.login)
-                    _tags.postValue(it.tags)
-                }
-            }
+//            if (result.isSuccess) {
+//                result.data?.let {
+//                    _login.postValue(it.login)
+//                    _tags.postValue(it.tags)
+//                }
+//            }
         }
     }
 }
