@@ -1,4 +1,4 @@
-package ua.nure.chumchase.auth.domain
+package ua.nure.chumchase.core.domain
 
 import android.util.Patterns
 import ua.nure.chumchase.R

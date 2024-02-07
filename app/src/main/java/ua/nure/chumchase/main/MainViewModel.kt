@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ua.nure.chumchase.auth.domain.AuthDataSource
 import ua.nure.chumchase.core.base.BaseViewModel
+import ua.nure.chumchase.core.data.token.TokenManager
 
-class MainViewModel(private val authDataSource: AuthDataSource): BaseViewModel() {
+class MainViewModel(private val tokenManager: TokenManager) : BaseViewModel() {
     private val _isUserLogged = MutableLiveData<Boolean>()
     val isUserLogged: LiveData<Boolean>
         get() = _isUserLogged
@@ -15,9 +15,9 @@ class MainViewModel(private val authDataSource: AuthDataSource): BaseViewModel()
     init {
         startLoading()
         viewModelScope.launch {
-            val result = authDataSource.isUserLogged()
+            val result = tokenManager.isUserLogged()
             handleResult(result)
-            _isUserLogged.postValue(result.data?:false)
+            _isUserLogged.postValue(result.data ?: false)
         }
     }
 }

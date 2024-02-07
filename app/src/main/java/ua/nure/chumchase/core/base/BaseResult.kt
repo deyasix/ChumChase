@@ -1,6 +1,6 @@
 package ua.nure.chumchase.core.base
 
-import ua.nure.chumchase.auth.domain.ErrorMessage
+import ua.nure.chumchase.core.domain.ErrorMessage
 
 data class BaseResult<T>(
     val isSuccess: Boolean,

@@ -5,7 +5,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
 import timber.log.Timber
-import ua.nure.chumchase.auth.domain.OperationStatusMessage
+import ua.nure.chumchase.core.domain.OperationStatusMessage
 import ua.nure.chumchase.core.base.BaseViewModel
 
 @Composable

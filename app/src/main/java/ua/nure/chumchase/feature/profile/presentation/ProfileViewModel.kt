@@ -1,21 +1,19 @@
 package ua.nure.chumchase.feature.profile.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.core.base.BaseViewModel
-import ua.nure.chumchase.feature.profile.domain.UserInfoRepository
+import ua.nure.chumchase.feature.profile.domain.ProfileRepository
 import ua.nure.chumchase.feature.profile.domain.model.CommentDTO
-import ua.nure.chumchase.feature.profile.domain.model.UserInfoDTO
+import ua.nure.chumchase.feature.profile.domain.model.ProfileDTO
 import java.time.LocalDateTime
 
-class ProfileViewModel(private val userInfoRepository: UserInfoRepository) : BaseViewModel() {
+class ProfileViewModel(private val profileRepository: ProfileRepository) : BaseViewModel() {
     private val _currentComment = MutableLiveData<String>()
     val currentComment: LiveData<String>
         get() = _currentComment
-    private val _userInfo = MutableLiveData<UserInfoDTO>()
-    val userInfo: LiveData<UserInfoDTO>
+    private val _userInfo = MutableLiveData<ProfileDTO>()
+    val userInfo: LiveData<ProfileDTO>
         get() = _userInfo
     private val _isCommentSending = MutableLiveData<Boolean>()
     val isCommentSending: LiveData<Boolean>
@@ -32,7 +30,7 @@ class ProfileViewModel(private val userInfoRepository: UserInfoRepository) : Bas
     private fun getInfo() {
         startLoading()
         viewModelScope.launch {
-            val result = userInfoRepository.getLoggedUserInfo()
+            val result = profileRepository.getLoggedUserInfo()
             result.data?.let {
                 _userInfo.postValue(it)
             }
@@ -47,8 +45,8 @@ class ProfileViewModel(private val userInfoRepository: UserInfoRepository) : Bas
                 CommentDTO(it, _currentComment.value ?: "", dateTime)
             _isCommentSending.value = true
             viewModelScope.launch {
-                userInfoRepository.sendComment(commentDTO, it)
-                userInfoRepository.getLoggedUserInfo().data?.let {
+                profileRepository.sendComment(commentDTO, it)
+                profileRepository.getLoggedUserInfo().data?.let {
                     _userInfo.postValue(it)
                 }
                 _isCommentSending.postValue(false)

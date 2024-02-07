@@ -1,7 +1,7 @@
 package ua.nure.chumchase.feature.profile.domain.model
 
 data class CommentDTO(
-    val author: UserInfoDTO,
+    val author: ProfileDTO,
     val text: String,
     val dateTime: String
 )

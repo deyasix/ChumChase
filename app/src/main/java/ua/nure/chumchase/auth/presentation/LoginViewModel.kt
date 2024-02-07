@@ -3,7 +3,7 @@ package ua.nure.chumchase.auth.presentation
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.auth.domain.AuthRepository
-import ua.nure.chumchase.auth.domain.BaseFieldErrors
+import ua.nure.chumchase.core.domain.BaseFieldErrors
 import ua.nure.chumchase.auth.domain.model.LoginUserDTO
 import ua.nure.chumchase.core.base.BaseResult
 import ua.nure.chumchase.core.base.BaseViewModel

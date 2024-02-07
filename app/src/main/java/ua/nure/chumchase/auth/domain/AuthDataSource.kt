@@ -7,5 +7,4 @@ import ua.nure.chumchase.core.base.BaseResult
 interface AuthDataSource {
     suspend fun login(loginUserDTO: LoginUserDTO): BaseResult<Boolean>
     suspend fun register(registerUserDTO: RegisterUserDTO): BaseResult<Boolean>
-    suspend fun isUserLogged(): BaseResult<Boolean>
 }

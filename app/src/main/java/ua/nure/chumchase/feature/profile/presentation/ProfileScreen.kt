@@ -43,20 +43,20 @@ fun ProfileScreen(
                         isCommentSending = isCommentSending
                     )
                 }
-                user?.comments?.let {
-                    items(it) { comment ->
-                        Comment(
-                            modifier = Modifier
-                                .background(MaterialTheme.colorScheme.surface)
-                                .fillMaxWidth()
-                                .padding(
-                                    vertical = dimensionResource(R.dimen.profile_vertical_padding),
-                                    horizontal = dimensionResource(R.dimen.base_horizontal_padding)
-                                ),
-                            commentDTO = comment
-                        )
-                    }
-                }
+//                user?.comments?.let {
+//                    items(it) { comment ->
+//                        Comment(
+//                            modifier = Modifier
+//                                .background(MaterialTheme.colorScheme.surface)
+//                                .fillMaxWidth()
+//                                .padding(
+//                                    vertical = dimensionResource(R.dimen.profile_vertical_padding),
+//                                    horizontal = dimensionResource(R.dimen.base_horizontal_padding)
+//                                ),
+//                            commentDTO = comment
+//                        )
+//                    }
+//                }
             }
         }
     }
@@ -84,7 +84,7 @@ fun ProfileInfo(modifier: Modifier = Modifier, viewModel: ProfileViewModel = koi
                 text = it.login,
                 style = MaterialTheme.typography.bodyLarge
             )
-            Tags(labels = it.tags)
+            Tags(labels = it.tags?:listOf())
         }
     }
 }

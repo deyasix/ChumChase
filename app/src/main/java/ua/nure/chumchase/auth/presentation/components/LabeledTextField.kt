@@ -6,10 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import ua.nure.chumchase.auth.domain.BaseFieldErrors
+import androidx.compose.ui.text.input.*
+import ua.nure.chumchase.core.domain.BaseFieldErrors
 import ua.nure.chumchase.auth.presentation.ValidState
 
 @Composable
