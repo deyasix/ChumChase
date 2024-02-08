@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.auth.presentation.components.*
+import ua.nure.chumchase.core.presentation.components.ResultResponder
 
 @Composable
 fun RegisterScreen(
@@ -26,7 +27,7 @@ fun RegisterScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         val snackBarHostState = remember { SnackbarHostState() }
-        ResultResponder(viewModel, onNavigateToMain, snackBarHostState)
+        ResultResponder(viewModel, snackBarHostState, onNavigateToMain)
         Scaffold(snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
         ) { padding ->
             Surface(Modifier.fillMaxSize()) {

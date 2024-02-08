@@ -39,6 +39,12 @@ enum class OperationStatusMessage : ErrorMessage {
     },
     SUCCESS {
         override val message = R.string.success_operation
+    },
+    TIMEOUT {
+        override val message = R.string.error_timeout
+    },
+    UNAUTHORIZED {
+        override val message: Int = R.string.error_unauthorized
     }
 }
 

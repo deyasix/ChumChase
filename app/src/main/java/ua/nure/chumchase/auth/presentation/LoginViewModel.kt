@@ -5,7 +5,7 @@ import kotlinx.coroutines.launch
 import ua.nure.chumchase.auth.domain.AuthRepository
 import ua.nure.chumchase.core.domain.BaseFieldErrors
 import ua.nure.chumchase.auth.domain.model.LoginUserDTO
-import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.core.base.BaseOperationResult
 import ua.nure.chumchase.core.base.BaseViewModel
 
 class LoginViewModel(private val authRepository: AuthRepository) :
@@ -35,7 +35,7 @@ class LoginViewModel(private val authRepository: AuthRepository) :
         viewModelScope.launch {
             val loginValue = login.value
             val passwordValue = password.value
-            val result = if (loginValue == null || passwordValue == null) BaseResult(
+            val result = if (loginValue == null || passwordValue == null) BaseOperationResult(
                 isSuccess = false,
                 error = BaseFieldErrors.EMPTY
             )

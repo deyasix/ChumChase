@@ -1,8 +1,6 @@
 package ua.nure.chumchase.core.base
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 
 abstract class BaseViewModel : ViewModel() {
     private val _isLoading = MutableLiveData(false)
@@ -16,7 +14,7 @@ abstract class BaseViewModel : ViewModel() {
     val error: LiveData<Int?>
         get() = _error
 
-    protected fun handleResult(result: BaseResult<out Any>) {
+    protected fun handleResult(result: BaseResult) {
         _isSuccess.postValue(result.isSuccess)
         _error.postValue(result.error?.message)
         _isLoading.postValue(false)

@@ -1,11 +1,11 @@
 package ua.nure.chumchase.feature.friends.domain
 
 import kotlinx.coroutines.delay
-import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.core.base.BaseDataResult
 
 class SearchFriendUseCase {
-    suspend fun execute(query: String): BaseResult<List<FriendDTO>> {
+    suspend fun execute(query: String): BaseDataResult<List<FriendDTO>> {
         delay(1000)
-        return BaseResult(isSuccess = true, data = listOf())
+        return BaseDataResult(isSuccess = true, data = listOf())
     }
 }

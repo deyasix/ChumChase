@@ -3,7 +3,7 @@ package ua.nure.chumchase.feature.settings.presentation
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.auth.domain.AuthRepository
-import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.core.base.BaseDataResult
 import ua.nure.chumchase.core.base.BaseViewModel
 
 class SettingsViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
@@ -39,7 +39,7 @@ class SettingsViewModel(private val authRepository: AuthRepository) : BaseViewMo
         startLoading()
         viewModelScope.launch {
             //val result = authRepository.getLoggedUser()
-            val result = BaseResult<Boolean>(isSuccess = false)
+            val result = BaseDataResult<Boolean>(isSuccess = false)
             handleResult(result)
 //            if (result.isSuccess) {
 //                result.data?.let {

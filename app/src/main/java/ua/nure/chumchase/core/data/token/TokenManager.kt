@@ -1,9 +1,9 @@
 package ua.nure.chumchase.core.data.token
 
-import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.core.base.BaseDataResult
 
 interface TokenManager {
     suspend fun saveToken(token: String)
     suspend fun getToken(): String?
-    suspend fun isUserLogged(): BaseResult<Boolean>
+    suspend fun isUserLogged(): BaseDataResult<Boolean>
 }

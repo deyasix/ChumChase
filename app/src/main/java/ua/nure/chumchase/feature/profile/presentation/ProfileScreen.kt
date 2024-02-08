@@ -7,8 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
 import ua.nure.chumchase.core.presentation.components.LoadingScreen
+import ua.nure.chumchase.core.presentation.components.ResultResponder
 import ua.nure.chumchase.feature.profile.presentation.components.*
 
 @Composable
@@ -27,10 +27,12 @@ fun ProfileScreen(
     val modifier = Modifier.padding(dimensionResource(R.dimen.base_horizontal_padding))
     Surface(color = MaterialTheme.colorScheme.surface) {
         val isLoading by viewModel.isLoading.observeAsState()
+        val snackBarHostState = remember { SnackbarHostState() }
         if (isLoading == true) LoadingScreen()
         else {
             val user by viewModel.userInfo.observeAsState()
             val isCommentSending by viewModel.isCommentSending.observeAsState()
+            ResultResponder(viewModel, snackBarHostState)
             LazyColumn {
                 item {
                     ProfileHeader(modifier = modifier, onNavigateToSettings)
@@ -84,7 +86,7 @@ fun ProfileInfo(modifier: Modifier = Modifier, viewModel: ProfileViewModel = koi
                 text = it.login,
                 style = MaterialTheme.typography.bodyLarge
             )
-            Tags(labels = it.tags?:listOf())
+            Tags(labels = it.tags ?: listOf())
         }
     }
 }

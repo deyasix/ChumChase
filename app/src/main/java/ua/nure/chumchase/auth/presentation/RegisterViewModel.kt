@@ -8,7 +8,7 @@ import ua.nure.chumchase.core.domain.EmailFieldErrors
 import ua.nure.chumchase.core.domain.ErrorMessage
 import ua.nure.chumchase.core.domain.PasswordFieldErrors
 import ua.nure.chumchase.auth.domain.model.RegisterUserDTO
-import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.core.base.BaseOperationResult
 import ua.nure.chumchase.core.base.BaseViewModel
 
 class RegisterViewModel(private val authRepository: AuthRepository) : BaseViewModel() {
@@ -81,7 +81,7 @@ class RegisterViewModel(private val authRepository: AuthRepository) : BaseViewMo
             val emailValue = email.value
             val passwordValue = password.value
             val result =
-                if (loginValue == null || passwordValue == null || emailValue == null) BaseResult(
+                if (loginValue == null || passwordValue == null || emailValue == null) BaseOperationResult(
                     isSuccess = false, error = BaseFieldErrors.EMPTY
                 )
                 else authRepository.register(RegisterUserDTO(loginValue, passwordValue, emailValue))

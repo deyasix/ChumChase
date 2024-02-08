@@ -3,7 +3,7 @@ package ua.nure.chumchase.core.data.token
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import kotlinx.coroutines.flow.first
-import ua.nure.chumchase.core.base.BaseResult
+import ua.nure.chumchase.core.base.BaseDataResult
 
 class TokenManagerImpl(private val dataStore: DataStore<Preferences>) : TokenManager {
     override suspend fun saveToken(token: String) {
@@ -13,10 +13,10 @@ class TokenManagerImpl(private val dataStore: DataStore<Preferences>) : TokenMan
     }
 
     override suspend fun getToken(): String? = dataStore.data.first()[LOGGED_USER_TOKEN]
-    override suspend fun isUserLogged(): BaseResult<Boolean> {
+    override suspend fun isUserLogged(): BaseDataResult<Boolean> {
         val token = getToken()
-        return if (token != null) BaseResult(isSuccess = true, data = true)
-        else BaseResult(isSuccess = true, data = false)
+        return if (token != null) BaseDataResult(isSuccess = true, data = true)
+        else BaseDataResult(isSuccess = true, data = false)
     }
 
     companion object {
