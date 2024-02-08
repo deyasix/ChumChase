@@ -1,71 +1,46 @@
 package ua.nure.chumchase.auth.presentation
 
-import androidx.compose.foundation.background
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.*
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.*
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.*
-import org.koin.java.KoinJavaComponent.get
+import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
-import ua.nure.chumchase.components.LabeledTextField
-import ua.nure.chumchase.ui.theme.ChumChaseTheme
+import ua.nure.chumchase.auth.presentation.components.*
+import ua.nure.chumchase.core.presentation.components.ResultResponder
 
 @Composable
 fun LoginScreen(
-    loginViewModel: LoginViewModel = get(LoginViewModel::class.java),
-    onNavigateToRegister: () -> Unit
+    onNavigateToRegister: () -> Unit,
+    onNavigateToMain: () -> Unit,
+    viewModel: LoginViewModel = koinViewModel()
 ) {
-    Surface(
-        modifier = Modifier.fillMaxSize()
+    val snackBarHostState = remember { SnackbarHostState() }
+    ResultResponder(viewModel, snackBarHostState, onNavigateToMain)
+    Scaffold(snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
     ) {
-        Column {
-            LoginHeader(
-                Modifier
-                    .background(color = MaterialTheme.colorScheme.primary)
-                    .weight(1f)
-            )
-            LoginForm(
-                Modifier
-                    .weight(3f)
-                    .padding(16.dp), loginViewModel, onNavigateToRegister
-            )
-        }
-    }
-}
-
-@Composable
-@Preview
-fun LoginScreenPreview() {
-    ChumChaseTheme {
-        LoginScreen(onNavigateToRegister = {})
-    }
-}
-
-@Composable
-fun LoginHeader(modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.align(Alignment.Center)) {
-            Text(
-                style = TextStyle(
-                    fontFamily = FontFamily(Font(R.font.spicy_rice, FontWeight.Normal)),
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 48.sp
-                ), text = stringResource(R.string.app_name), modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .heightIn(max = 52.dp), color = MaterialTheme.colorScheme.onPrimary
-            )
-            Text(
-                style = MaterialTheme.typography.titleMedium,
-                text = stringResource(R.string.app_tagline),
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                color = MaterialTheme.colorScheme.onPrimary
-            )
+        Surface(Modifier.fillMaxSize()) {
+            val configuration = LocalConfiguration.current
+            if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                Row(Modifier.padding(it)) {
+                    Header(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxHeight()
+                    )
+                    LoginForm(Modifier.weight(1f), onNavigateToRegister)
+                }
+            } else {
+                Column(Modifier.padding(it)) {
+                    Header(Modifier.weight(1f))
+                    LoginForm(Modifier.weight(3f), onNavigateToRegister)
+                }
+            }
         }
     }
 }
@@ -73,37 +48,46 @@ fun LoginHeader(modifier: Modifier = Modifier) {
 @Composable
 fun LoginForm(
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel,
-    onNavigateToRegister: () -> Unit
+    onNavigateToRegister: () -> Unit,
+    viewModel: LoginViewModel = koinViewModel()
 ) {
+    val login by viewModel.login.observeAsState()
+    val password by viewModel.password.observeAsState()
+    val isLoading by viewModel.isLoading.observeAsState()
+    val padding = dimensionResource(R.dimen.base_horizontal_padding)
     Column(
-        modifier.fillMaxWidth(),
+        modifier
+            .padding(padding)
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(padding)
     ) {
         LabeledTextField(
-            onChangeText = { viewModel.setLogin(it) },
+            onChangeText = viewModel::setLogin,
             label = stringResource(R.string.login_label),
             initialText = viewModel.login.value
         )
         LabeledTextField(
-            onChangeText = { viewModel.setPassword(it) },
+            onChangeText = viewModel::setPassword,
             label = stringResource(R.string.password_label),
             initialText = viewModel.password.value,
             isPassword = true
         )
-        Button(onClick = { viewModel.login() }) {
-            Text(stringResource(R.string.login_button), style = MaterialTheme.typography.bodyLarge)
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Don't have an account?", style = MaterialTheme.typography.bodyMedium)
-            TextButton(onClick = onNavigateToRegister) {
+        key(login, password) {
+            Button(onClick = viewModel::login, enabled = viewModel.isLoginAvailable()) {
                 Text(
-                    "Register",
-                    textDecoration = TextDecoration.Underline,
-                    style = MaterialTheme.typography.bodyMedium
+                    stringResource(R.string.login_button),
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }
+        if (isLoading == true) {
+            LinearProgressIndicator()
+        }
+        NavigationQuestion(
+            questionText = R.string.dont_have_an_account,
+            buttonText = R.string.register,
+            onNavigate = onNavigateToRegister
+        )
     }
 }

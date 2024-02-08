@@ -4,7 +4,15 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import ua.nure.chumchase.di.module.appModule
+import timber.log.Timber
+import ua.nure.chumchase.auth.authModule
+import ua.nure.chumchase.core.data.retrofitModule
+import ua.nure.chumchase.core.data.token.tokenModule
+import ua.nure.chumchase.feature.chat.chatModule
+import ua.nure.chumchase.feature.friends.friendsModule
+import ua.nure.chumchase.feature.profile.profileModule
+import ua.nure.chumchase.feature.settings.settingsModule
+import ua.nure.chumchase.main.mainModule
 
 class App : Application() {
     override fun onCreate() {
@@ -12,7 +20,23 @@ class App : Application() {
         startKoin {
             androidLogger()
             androidContext(this@App)
-            modules(appModule)
+            modules(
+                mainModule,
+                retrofitModule,
+                tokenModule,
+                authModule,
+                profileModule,
+                settingsModule,
+                friendsModule,
+                chatModule
+            )
+        }
+        initLogger()
+    }
+
+    private fun initLogger() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
         }
     }
 

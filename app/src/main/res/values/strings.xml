@@ -1,7 +1,57 @@
 <resources>
     <string name="app_name">ChumChase</string>
     <string name="app_tagline">Connect, Chat, Cherish</string>
+
+    <string name="field_should_be_not_empty">Field should be not empty</string>
+    <string name="failed_operation">Failure! Something went wrong…</string>
+    <string name="success_operation">Success!</string>
+    <string name="error_timeout">Server doesn\'t respond. Try again</string>
+    <string name="error_unauthorized">Authorization failed. Try again</string>
+
+    <!-- Auth -->
     <string name="login_label">Login</string>
     <string name="password_label">Password</string>
     <string name="login_button">Login</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email_label">Email</string>
+    <string name="register_button">Register</string>
+    <string name="repeat_password_label">Repeat password</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="error_user_existed">User already existed!</string>
+    <string name="invalid_login_or_password">Invalid login or password!</string>
+    <string name="password_too_short">Password is too short, minimum length is 6 symbols</string>
+    <string name="password_dont_match">Passwords don\'t match</string>
+    <string name="invalid_email_error">Email is invalid</string>
+
+    <!-- Navigation -->
+    <string name="login_nav">to_login</string>
+    <string name="registration_nav">to_registration</string>
+    <string name="main_nav">to_main</string>
+    <string name="settings_nav">to_settings</string>
+
+    <!-- Bottom Menu -->
+    <string name="profile_button">Profile</string>
+    <string name="friends_button">Friends</string>
+    <string name="recommendations_button">For You</string>
+    <string name="chat_button">Chat</string>
+
+    <!-- Profile -->
+    <string name="profile_photo_description">Profile photo</string>
+    <string name="settings_button_description">Settings</string>
+    <string name="send_comment_description">Send a comment</string>
+    <string name="comment_field_placeholder">Post a new comment here…</string>
+
+    <!-- Settings -->
+    <string name="settings_login_title">Login</string>
+    <string name="settings_email_title">Email</string>
+    <string name="settings_interests_title">Interests</string>
+    <string name="edit_button_description">Edit</string>
+
+    <!-- Friends -->
+    <string name="empty_friends_list_placeholder">No friends yet</string>
+    <string name="search_placeholder">Search…</string>
+    <string name="search_icon_description">Search icon</string>
+
 </resources>
