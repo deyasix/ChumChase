@@ -5,8 +5,10 @@
     <string name="field_should_be_not_empty">Field should be not empty</string>
     <string name="failed_operation">Failure! Something went wrong…</string>
     <string name="success_operation">Success!</string>
-    <string name="error_timeout">Server doesn\'t respond. Try again</string>
-    <string name="error_unauthorized">Authorization failed. Try again</string>
+    <string name="error_timeout">Server doesn\'t respond</string>
+    <string name="error_unauthorized">Authorization failed</string>
+    <string name="button_try_again">Try again</string>
+    <string name="error_icon_description">Error icon</string>
 
     <!-- Auth -->
     <string name="login_label">Login</string>

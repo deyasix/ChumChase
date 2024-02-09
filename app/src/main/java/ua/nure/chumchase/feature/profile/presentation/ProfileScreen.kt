@@ -25,26 +25,28 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = koinViewModel()
 ) {
     val modifier = Modifier.padding(dimensionResource(R.dimen.base_horizontal_padding))
-    Surface(color = MaterialTheme.colorScheme.surface) {
-        val isLoading by viewModel.isLoading.observeAsState()
-        val snackBarHostState = remember { SnackbarHostState() }
-        if (isLoading == true) LoadingScreen()
-        else {
-            val user by viewModel.userInfo.observeAsState()
-            val isCommentSending by viewModel.isCommentSending.observeAsState()
-            ResultResponder(viewModel, snackBarHostState)
-            LazyColumn {
-                item {
-                    ProfileHeader(modifier = modifier, onNavigateToSettings)
-                    CommentField(
-                        modifier = modifier,
-                        initialText = viewModel.currentComment.value,
-                        placeholder = stringResource(R.string.comment_field_placeholder),
-                        onChangeText = viewModel::setCurrentComment,
-                        onSendComment = viewModel::sendComment,
-                        isCommentSending = isCommentSending
-                    )
-                }
+    val snackBarHostState = remember { SnackbarHostState() }
+    Scaffold(snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
+    ) {
+        Surface(color = MaterialTheme.colorScheme.surface, modifier = Modifier.padding(it)) {
+            val isLoading by viewModel.isLoading.observeAsState()
+            if (isLoading == true) LoadingScreen()
+            else {
+                val user by viewModel.userInfo.observeAsState()
+                val isCommentSending by viewModel.isCommentSending.observeAsState()
+                ResultResponder(viewModel, snackBarHostState)
+                LazyColumn {
+                    item {
+                        ProfileHeader(modifier = modifier, onNavigateToSettings)
+                        CommentField(
+                            modifier = modifier,
+                            initialText = viewModel.currentComment.value,
+                            placeholder = stringResource(R.string.comment_field_placeholder),
+                            onChangeText = viewModel::setCurrentComment,
+                            onSendComment = viewModel::sendComment,
+                            isCommentSending = isCommentSending
+                        )
+                    }
 //                user?.comments?.let {
 //                    items(it) { comment ->
 //                        Comment(
@@ -59,6 +61,7 @@ fun ProfileScreen(
 //                        )
 //                    }
 //                }
+                }
             }
         }
     }
@@ -66,7 +69,10 @@ fun ProfileScreen(
 
 @Composable
 fun ProfileHeader(modifier: Modifier = Modifier, onNavigateToSettings: () -> Unit) {
-    Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         SettingsButton(Modifier.align(Alignment.End), onNavigateToSettings)
         ProfileInfo()
     }

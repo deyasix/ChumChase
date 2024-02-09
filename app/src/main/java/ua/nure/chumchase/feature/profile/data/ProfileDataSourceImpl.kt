@@ -2,7 +2,6 @@ package ua.nure.chumchase.feature.profile.data
 
 import ua.nure.chumchase.core.base.BaseDataResult
 import ua.nure.chumchase.core.data.token.TokenManager
-import ua.nure.chumchase.core.domain.OperationStatusMessage
 import ua.nure.chumchase.core.utils.getErrorMessage
 import ua.nure.chumchase.core.utils.handleData
 import ua.nure.chumchase.feature.profile.domain.ProfileDataSource
@@ -14,13 +13,13 @@ class ProfileDataSourceImpl(
 ) : ProfileDataSource {
     override suspend fun getMyProfile(): BaseDataResult<ProfileDTO> {
         return try {
-            val token = tokenManager.getToken()
-            if (token == null) BaseDataResult(
+            val result = tokenManager.getAccessToken()
+            if (!result.isSuccess || result.data == null) BaseDataResult(
                 isSuccess = false,
-                error = OperationStatusMessage.UNAUTHORIZED
+                error = result.error
             )
             else {
-                val response = profileService.getMyProfile(token)
+                val response = profileService.getMyProfile(result.data)
                 response.handleData()
             }
         } catch (exception: Exception) {

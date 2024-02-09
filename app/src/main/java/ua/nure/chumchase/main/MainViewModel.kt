@@ -13,11 +13,19 @@ class MainViewModel(private val tokenManager: TokenManager) : BaseViewModel() {
         get() = _isUserLogged
 
     init {
+        autoLogin()
+    }
+
+    fun reload() {
+        autoLogin()
+    }
+
+    private fun autoLogin() {
         startLoading()
         viewModelScope.launch {
             val result = tokenManager.isUserLogged()
+            _isUserLogged.postValue(result.isSuccess)
             handleResult(result)
-            _isUserLogged.postValue(result.data ?: false)
         }
     }
 }

@@ -20,9 +20,9 @@ class AuthDataSourceImpl(
         return try {
             val response = authService.login(LoginUser(loginUserDTO.login, loginUserDTO.password))
             response.handle {
-                it?.access_token?.let { token ->
+                it?.let { token ->
                     CoroutineScope(defaultDispatcher).launch {
-                        tokenManager.saveToken(token)
+                        tokenManager.saveToken(token.toDomainModel())
                     }
                 }
             }
