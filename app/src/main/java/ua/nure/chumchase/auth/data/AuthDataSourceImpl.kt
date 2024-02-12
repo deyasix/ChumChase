@@ -7,13 +7,13 @@ import ua.nure.chumchase.auth.domain.AuthDataSource
 import ua.nure.chumchase.auth.domain.model.LoginUserDTO
 import ua.nure.chumchase.auth.domain.model.RegisterUserDTO
 import ua.nure.chumchase.core.base.BaseOperationResult
-import ua.nure.chumchase.core.data.token.TokenManager
+import ua.nure.chumchase.core.data.token.SessionManager
 import ua.nure.chumchase.core.utils.getErrorMessage
 import ua.nure.chumchase.core.utils.handle
 
 class AuthDataSourceImpl(
     private val authService: AuthService,
-    private val tokenManager: TokenManager,
+    private val sessionManager: SessionManager,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : AuthDataSource {
     override suspend fun login(loginUserDTO: LoginUserDTO): BaseOperationResult {
@@ -22,7 +22,7 @@ class AuthDataSourceImpl(
             response.handle {
                 it?.let { token ->
                     CoroutineScope(defaultDispatcher).launch {
-                        tokenManager.saveToken(token.toDomainModel())
+                        sessionManager.saveToken(token.toDomainModel())
                     }
                 }
             }

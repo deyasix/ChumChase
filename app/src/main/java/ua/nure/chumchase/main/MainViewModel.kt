@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.core.base.BaseViewModel
-import ua.nure.chumchase.core.data.token.TokenManager
+import ua.nure.chumchase.core.data.token.SessionManager
 
-class MainViewModel(private val tokenManager: TokenManager) : BaseViewModel() {
+class MainViewModel(private val sessionManager: SessionManager) : BaseViewModel() {
     private val _isUserLogged = MutableLiveData<Boolean>()
     val isUserLogged: LiveData<Boolean>
         get() = _isUserLogged
@@ -23,7 +23,7 @@ class MainViewModel(private val tokenManager: TokenManager) : BaseViewModel() {
     private fun autoLogin() {
         startLoading()
         viewModelScope.launch {
-            val result = tokenManager.isUserLogged()
+            val result = sessionManager.isUserLogged()
             _isUserLogged.postValue(result.isSuccess)
             handleResult(result)
         }
