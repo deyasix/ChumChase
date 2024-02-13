@@ -8,6 +8,8 @@ import ua.nure.chumchase.auth.domain.AuthDataSource
 
 val authDataModule = module {
     singleOf(::getAuthService)
+    singleOf(::AccessTokenDtoMapper)
+    singleOf(::RegisterUserDtoMapper)
     singleOf(::AuthDataSourceImpl) bind AuthDataSource::class
 }
 

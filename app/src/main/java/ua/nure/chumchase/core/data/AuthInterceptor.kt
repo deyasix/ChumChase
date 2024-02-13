@@ -5,14 +5,15 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import org.koin.java.KoinJavaComponent.inject
 import timber.log.Timber
-import ua.nure.chumchase.core.data.token.AccessTokenDTO
+import ua.nure.chumchase.auth.data.AccessTokenDtoMapper
 import ua.nure.chumchase.core.data.token.SessionManager
 import ua.nure.chumchase.core.data.token.TokenService
 import ua.nure.chumchase.core.utils.handleData
 
 class AuthInterceptor(
     private val sessionManager: SessionManager,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val tokenDtoMapper: AccessTokenDtoMapper,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) : Interceptor {
 
     private val tokenService by inject<TokenService>(TokenService::class.java)
@@ -40,16 +41,10 @@ class AuthInterceptor(
             val refreshToken = sessionManager.getRefreshToken()
             if (refreshToken.data != null) {
                 val response = tokenService.refreshToken("Bearer ${refreshToken.data}")
-                response.handleData {
+                response.handleData(tokenDtoMapper) {
                     it?.let {
                         CoroutineScope(defaultDispatcher).launch {
-                            sessionManager.saveToken(
-                                AccessTokenDTO(
-                                    it.accessToken,
-                                    it.refreshToken,
-                                    it.expiresIn
-                                )
-                            )
+                            sessionManager.saveToken(tokenDtoMapper.mapToDomainModel(it))
                         }
                     }
                     accessToken = it?.accessToken

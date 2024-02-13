@@ -10,12 +10,14 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ua.nure.chumchase.BuildConfig
+import ua.nure.chumchase.auth.data.AccessTokenDtoMapper
 import ua.nure.chumchase.core.data.token.TokenService
 import ua.nure.chumchase.core.data.token.sessionManagerModule
 
 val retrofitModule = module {
     includes(sessionManagerModule)
     single { Dispatchers.IO }
+    singleOf(::AccessTokenDtoMapper)
     singleOf(::AuthInterceptor) bind Interceptor::class
     singleOf(::getRetrofitClient)
     singleOf(::getTokenService)

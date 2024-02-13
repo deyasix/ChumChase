@@ -4,16 +4,19 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.core.base.BaseViewModel
 import ua.nure.chumchase.feature.profile.domain.ProfileRepository
-import ua.nure.chumchase.feature.profile.domain.model.CommentDTO
-import ua.nure.chumchase.feature.profile.domain.model.ProfileDTO
-import java.time.LocalDateTime
+import ua.nure.chumchase.feature.profile.domain.SendCommentUseCase
+import ua.nure.chumchase.feature.profile.domain.model.PlainComment
+import ua.nure.chumchase.feature.profile.domain.model.Profile
 
-class ProfileViewModel(private val profileRepository: ProfileRepository) : BaseViewModel() {
+class ProfileViewModel(
+    private val profileRepository: ProfileRepository,
+    private val sendCommentUseCase: SendCommentUseCase
+) : BaseViewModel() {
     private val _currentComment = MutableLiveData<String>()
     val currentComment: LiveData<String>
         get() = _currentComment
-    private val _userInfo = MutableLiveData<ProfileDTO>()
-    val userInfo: LiveData<ProfileDTO>
+    private val _userInfo = MutableLiveData<Profile>()
+    val userInfo: LiveData<Profile>
         get() = _userInfo
     private val _isCommentSending = MutableLiveData<Boolean>()
     val isCommentSending: LiveData<Boolean>
@@ -39,13 +42,11 @@ class ProfileViewModel(private val profileRepository: ProfileRepository) : BaseV
     }
 
     fun sendComment() {
-        val dateTime = LocalDateTime.now().toString()
         userInfo.value?.let {
-            val commentDTO =
-                CommentDTO(it, _currentComment.value ?: "", dateTime)
+            val comment = PlainComment(it.uid, currentComment.value)
             _isCommentSending.value = true
             viewModelScope.launch {
-                profileRepository.sendComment(commentDTO, it)
+                sendCommentUseCase.execute(comment)
                 profileRepository.getLoggedUserInfo().data?.let {
                     _userInfo.postValue(it)
                 }

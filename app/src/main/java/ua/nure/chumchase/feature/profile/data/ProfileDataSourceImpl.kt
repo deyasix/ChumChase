@@ -4,15 +4,16 @@ import ua.nure.chumchase.core.base.BaseDataResult
 import ua.nure.chumchase.core.utils.getErrorMessage
 import ua.nure.chumchase.core.utils.handleData
 import ua.nure.chumchase.feature.profile.domain.ProfileDataSource
-import ua.nure.chumchase.feature.profile.domain.model.ProfileDTO
+import ua.nure.chumchase.feature.profile.domain.model.Profile
 
 class ProfileDataSourceImpl(
-    private val profileService: ProfileService
+    private val profileService: ProfileService,
+    private val profileDtoMapper: ProfileDtoMapper
 ) : ProfileDataSource {
-    override suspend fun getMyProfile(): BaseDataResult<ProfileDTO> {
+    override suspend fun getMyProfile(): BaseDataResult<Profile> {
         return try {
             val response = profileService.getMyProfile()
-            response.handleData()
+            response.handleData(profileDtoMapper)
         } catch (exception: Exception) {
             BaseDataResult(
                 false, exception.getErrorMessage()
@@ -20,10 +21,10 @@ class ProfileDataSourceImpl(
         }
     }
 
-    override suspend fun getProfile(uid: String): BaseDataResult<ProfileDTO> {
+    override suspend fun getProfile(uid: String): BaseDataResult<Profile> {
         return try {
             val response = profileService.getProfile(uid)
-            response.handleData()
+            response.handleData(profileDtoMapper)
         } catch (exception: Exception) {
             BaseDataResult(
                 false, exception.getErrorMessage()
