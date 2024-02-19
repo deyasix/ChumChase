@@ -8,5 +8,5 @@ data class ProfileDto(
     val email: String,
     @SerializedName("photo_url") val photoUrl: String?,
     @SerializedName("tag_list") val tags: List<String>?,
-    val comments: List<CommentDto>?
+    @SerializedName("comment_list") val comments: List<CommentDto>?
 )

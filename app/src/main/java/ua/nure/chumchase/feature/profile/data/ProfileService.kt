@@ -8,6 +8,9 @@ interface ProfileService {
     @GET("user/get")
     suspend fun getMyProfile(): Response<ProfileDto>
 
-    @POST("user/get/{uid}")
+    @GET("user/get/{uid}")
     suspend fun getProfile(@Path("uid") uid: String): Response<ProfileDto>
+
+    @GET("user/is_me/{uid}")
+    suspend fun isMyProfile(@Path("uid") uid: String): Response<Any>
 }

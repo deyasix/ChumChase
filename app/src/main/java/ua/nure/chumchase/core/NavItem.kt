@@ -25,7 +25,7 @@ enum class BottomNavItems(
     RECOMMENDATIONS("recommendations", R.string.recommendations_button, Icons.Rounded.Public),
     CHAT("chat", R.string.chat_button, Icons.Rounded.Chat),
     FRIENDS("friends", R.string.friends_button, Icons.Rounded.People),
-    PROFILE("profile", R.string.profile_button, Icons.Rounded.AccountCircle),
+    PROFILE("profile", R.string.profile_button, Icons.Rounded.AccountCircle)
 }
 
 enum class NavItems(override val route: String, override val labelId: Int) : Navigational {
@@ -35,3 +35,6 @@ enum class NavItems(override val route: String, override val labelId: Int) : Nav
     SETTINGS("settings", R.string.settings_nav)
 }
 
+object NavArguments {
+    const val USER_ID = "USER_ID"
+}

@@ -15,20 +15,24 @@ fun Comment(
     photoUrl: String?,
     login: String,
     text: String,
-    date: String
+    date: String,
+    onSenderClick: () -> Unit
 ) {
     Row(modifier) {
         ProfilePhoto(
             modifier = Modifier
                 .size(dimensionResource(R.dimen.comment_profile_photo_size))
-                .clickable { },
+                .clickable { onSenderClick() },
             photoUrl = photoUrl
         )
         Column(
             Modifier.padding(start = dimensionResource(R.dimen.profile_vertical_padding)),
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(login, style = MaterialTheme.typography.bodyMedium)
+            Text(
+                text = login,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.clickable { onSenderClick() })
             Text(text, style = MaterialTheme.typography.bodySmall)
             Text(date, style = MaterialTheme.typography.labelSmall)
         }
