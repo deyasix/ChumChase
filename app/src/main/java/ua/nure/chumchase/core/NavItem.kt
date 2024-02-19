@@ -2,8 +2,8 @@ package ua.nure.chumchase.core
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Chat
 import androidx.compose.material.icons.rounded.AccountCircle
-import androidx.compose.material.icons.rounded.Chat
 import androidx.compose.material.icons.rounded.People
 import androidx.compose.material.icons.rounded.Public
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -23,7 +23,10 @@ enum class BottomNavItems(
 ) :
     Navigational {
     RECOMMENDATIONS("recommendations", R.string.recommendations_button, Icons.Rounded.Public),
-    CHAT("chat", R.string.chat_button, Icons.Rounded.Chat),
+
+    /* reminder: auto mirrored icons for RTL layout support (they automatically mirror themselves).
+    not auto mirrored icons are deprecated (if there's difference) in material >= 1.6.0 */
+    CHAT("chat", R.string.chat_button, Icons.AutoMirrored.Rounded.Chat),
     FRIENDS("friends", R.string.friends_button, Icons.Rounded.People),
     PROFILE("profile", R.string.profile_button, Icons.Rounded.AccountCircle)
 }
