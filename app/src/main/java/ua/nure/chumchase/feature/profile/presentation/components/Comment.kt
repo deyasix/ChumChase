@@ -7,28 +7,34 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import ua.nure.chumchase.feature.profile.domain.model.CommentDTO
 import ua.nure.chumchase.R
 
 @Composable
 fun Comment(
     modifier: Modifier = Modifier,
-    commentDTO: CommentDTO
+    photoUrl: String?,
+    login: String,
+    text: String,
+    date: String,
+    onSenderClick: () -> Unit
 ) {
     Row(modifier) {
         ProfilePhoto(
             modifier = Modifier
                 .size(dimensionResource(R.dimen.comment_profile_photo_size))
-                .clickable { },
-            photoUrl = commentDTO.author.photoUrl
+                .clickable { onSenderClick() },
+            photoUrl = photoUrl
         )
         Column(
             Modifier.padding(start = dimensionResource(R.dimen.profile_vertical_padding)),
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(commentDTO.author.login, style = MaterialTheme.typography.bodyMedium)
-            Text(commentDTO.text, style = MaterialTheme.typography.bodySmall)
-            Text(commentDTO.dateTime, style = MaterialTheme.typography.labelSmall)
+            Text(
+                text = login,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.clickable { onSenderClick() })
+            Text(text, style = MaterialTheme.typography.bodySmall)
+            Text(date, style = MaterialTheme.typography.labelSmall)
         }
     }
 }

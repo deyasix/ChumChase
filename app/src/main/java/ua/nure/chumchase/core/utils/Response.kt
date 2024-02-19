@@ -3,8 +3,8 @@ package ua.nure.chumchase.core.utils
 import retrofit2.Response
 import ua.nure.chumchase.core.base.BaseDataResult
 import ua.nure.chumchase.core.base.BaseOperationResult
-import ua.nure.chumchase.core.base.ResponseEntity
 import ua.nure.chumchase.core.domain.AuthResponseMessage
+import ua.nure.chumchase.core.domain.DomainMapper
 import ua.nure.chumchase.core.domain.ErrorMessage
 import ua.nure.chumchase.core.domain.OperationStatusMessage
 import java.net.SocketTimeoutException
@@ -24,12 +24,13 @@ fun <T> Response<T>.handle(
     return BaseOperationResult(isSuccess, error)
 }
 
-fun <T, V : ResponseEntity<T>> Response<V>.handleData(
+fun <T, V> Response<V>.handleData(
+    domainMapper: DomainMapper<V, T>,
     onSuccess: (V?) -> Unit = {}
 ): BaseDataResult<T> {
     var isSuccess = false
     var error: ErrorMessage?
-    var data: ResponseEntity<T>? = null
+    var data: V? = null
     try {
         data = body()
         if (isSuccessful && data != null) {
@@ -43,5 +44,6 @@ fun <T, V : ResponseEntity<T>> Response<V>.handleData(
     } catch (exception: SocketTimeoutException) {
         error = OperationStatusMessage.TIMEOUT
     }
-    return BaseDataResult(isSuccess, error, data?.toDomainModel())
+    val result = data?.let { domainMapper.mapToDomainModel(it) }
+    return BaseDataResult(isSuccess, error, result)
 }

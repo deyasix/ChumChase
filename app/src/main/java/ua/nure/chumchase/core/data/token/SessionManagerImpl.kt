@@ -9,7 +9,7 @@ import ua.nure.chumchase.core.base.BaseOperationResult
 class SessionManagerImpl(
     private val dataStore: DataStore<Preferences>
 ) : SessionManager {
-    override suspend fun saveToken(token: AccessTokenDTO) {
+    override suspend fun saveToken(token: AccessToken) {
         dataStore.edit {
             it[ACCESS_TOKEN] = token.accessToken
             it[REFRESH_TOKEN] = token.refreshToken

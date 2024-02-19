@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ua.nure.chumchase.auth.domain.AuthRepository
 import ua.nure.chumchase.core.domain.BaseFieldErrors
-import ua.nure.chumchase.auth.domain.model.LoginUserDTO
+import ua.nure.chumchase.auth.domain.model.LoginUser
 import ua.nure.chumchase.core.base.BaseOperationResult
 import ua.nure.chumchase.core.base.BaseViewModel
 
@@ -39,7 +39,7 @@ class LoginViewModel(private val authRepository: AuthRepository) :
                 isSuccess = false,
                 error = BaseFieldErrors.EMPTY
             )
-            else authRepository.login(LoginUserDTO(loginValue, passwordValue))
+            else authRepository.login(LoginUser(loginValue, passwordValue))
             handleResult(result)
         }
     }

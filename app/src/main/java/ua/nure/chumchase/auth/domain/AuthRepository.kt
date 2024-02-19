@@ -1,12 +1,12 @@
 package ua.nure.chumchase.auth.domain
 
-import ua.nure.chumchase.auth.domain.model.LoginUserDTO
-import ua.nure.chumchase.auth.domain.model.RegisterUserDTO
+import ua.nure.chumchase.auth.domain.model.LoginUser
+import ua.nure.chumchase.auth.domain.model.RegisterUser
 import ua.nure.chumchase.core.base.BaseOperationResult
 
 interface AuthRepository {
 
-    suspend fun login(loginUserDTO: LoginUserDTO): BaseOperationResult
-    suspend fun register(registerUserDTO: RegisterUserDTO): BaseOperationResult
+    suspend fun login(loginUser: LoginUser): BaseOperationResult
+    suspend fun register(registerUser: RegisterUser): BaseOperationResult
 
 }

@@ -13,15 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import org.koin.androidx.compose.koinViewModel
 import ua.nure.chumchase.R
+import ua.nure.chumchase.core.BottomNavItems
+import ua.nure.chumchase.core.NavItems
 import ua.nure.chumchase.core.presentation.components.LoadingScreen
 import ua.nure.chumchase.core.presentation.components.ResultResponder
 import ua.nure.chumchase.feature.profile.presentation.components.*
 
 @Composable
 fun ProfileScreen(
-    onNavigateToSettings: () -> Unit,
+    navController: NavController,
     viewModel: ProfileViewModel = koinViewModel()
 ) {
     val modifier = Modifier.padding(dimensionResource(R.dimen.base_horizontal_padding))
@@ -30,6 +33,7 @@ fun ProfileScreen(
     ) {
         Surface(color = MaterialTheme.colorScheme.surface, modifier = Modifier.padding(it)) {
             val isLoading by viewModel.isLoading.observeAsState()
+            val isMyProfile by viewModel.isMyProfile.observeAsState()
             if (isLoading == true) LoadingScreen()
             else {
                 val user by viewModel.userInfo.observeAsState()
@@ -37,7 +41,10 @@ fun ProfileScreen(
                 ResultResponder(viewModel, snackBarHostState)
                 LazyColumn {
                     item {
-                        ProfileHeader(modifier = modifier, onNavigateToSettings)
+                        if (isMyProfile == true) ProfileHeader(
+                            modifier = modifier
+                        ) { navController.navigate(NavItems.SETTINGS.route) }
+                        else ProfileInfo(modifier = modifier.fillMaxWidth())
                         CommentField(
                             modifier = modifier,
                             initialText = viewModel.currentComment.value,
@@ -47,20 +54,23 @@ fun ProfileScreen(
                             isCommentSending = isCommentSending
                         )
                     }
-//                user?.comments?.let {
-//                    items(it) { comment ->
-//                        Comment(
-//                            modifier = Modifier
-//                                .background(MaterialTheme.colorScheme.surface)
-//                                .fillMaxWidth()
-//                                .padding(
-//                                    vertical = dimensionResource(R.dimen.profile_vertical_padding),
-//                                    horizontal = dimensionResource(R.dimen.base_horizontal_padding)
-//                                ),
-//                            commentDTO = comment
-//                        )
-//                    }
-//                }
+                    user?.comments?.let { comments ->
+                        items(comments) { comment ->
+                            Comment(
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.surface)
+                                    .fillMaxWidth()
+                                    .padding(
+                                        vertical = dimensionResource(R.dimen.profile_vertical_padding),
+                                        horizontal = dimensionResource(R.dimen.base_horizontal_padding)
+                                    ),
+                                photoUrl = comment.senderPhotoUrl,
+                                login = comment.senderLogin,
+                                text = comment.text,
+                                date = comment.date
+                            ) { navController.navigate("${BottomNavItems.PROFILE.route}/${comment.senderId}") }
+                        }
+                    }
                 }
             }
         }
@@ -92,7 +102,7 @@ fun ProfileInfo(modifier: Modifier = Modifier, viewModel: ProfileViewModel = koi
                 text = it.login,
                 style = MaterialTheme.typography.bodyLarge
             )
-            Tags(labels = it.tags ?: listOf())
+            Tags(labels = it.tags)
         }
     }
 }
