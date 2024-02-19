@@ -18,6 +18,7 @@ import ua.nure.chumchase.BottomNavigationBar
 import ua.nure.chumchase.auth.presentation.AuthScreen
 import ua.nure.chumchase.core.BottomNavItems
 import ua.nure.chumchase.core.NavItems
+import ua.nure.chumchase.core.presentation.components.ErrorScreen
 import ua.nure.chumchase.core.presentation.components.LoadingScreen
 import ua.nure.chumchase.feature.profile.presentation.ProfileScreen
 import ua.nure.chumchase.core.presentation.theme.ChumChaseTheme
@@ -40,12 +41,13 @@ class MainActivity : ComponentActivity() {
 fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
     val isLoading by viewModel.isLoading.observeAsState()
     val isUserLogged by viewModel.isUserLogged.observeAsState()
+    val error by viewModel.error.observeAsState()
     if (isLoading == true) {
         LoadingScreen()
     } else {
-        if (isUserLogged == true) {
-            AppScreen()
-        } else AuthScreen()
+        if (error == null) {
+            if (isUserLogged == true) AppScreen() else AuthScreen()
+        } else ErrorScreen(onReload = viewModel::reload, errorResource = error)
     }
 }
 

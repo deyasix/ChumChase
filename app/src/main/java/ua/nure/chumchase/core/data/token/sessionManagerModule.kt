@@ -9,9 +9,9 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val tokenModule = module {
+val sessionManagerModule = module {
     single { androidContext().dataStore }
-    singleOf(::TokenManagerImpl) bind TokenManager::class
+    singleOf(::SessionManagerImpl) bind SessionManager::class
 }
 
 private const val DATASTORE_KEY = "DATASTORE_KEY"

@@ -24,15 +24,15 @@ fun <T> Response<T>.handle(
     return BaseOperationResult(isSuccess, error)
 }
 
-fun <T, V: ResponseEntity<T>> Response<V>.handleData(
+fun <T, V : ResponseEntity<T>> Response<V>.handleData(
     onSuccess: (V?) -> Unit = {}
 ): BaseDataResult<T> {
     var isSuccess = false
     var error: ErrorMessage?
     var data: ResponseEntity<T>? = null
     try {
-        if (isSuccessful) {
-            data = body()
+        data = body()
+        if (isSuccessful && data != null) {
             onSuccess(data)
             isSuccess = true
             error = null
